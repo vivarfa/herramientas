@@ -75,8 +75,20 @@ export function BiaChatWidget() {
       }));
 
     } catch (error) {
-      console.error(error);
-      const errorMessage: Message = { role: 'assistant', content: 'Lo siento, ha ocurrido un error al procesar tu pregunta. Inténtalo de nuevo más tarde.' };
+      console.error('Error en BiaChatWidget:', error);
+      let errorContent = 'Lo siento, ha ocurrido un error al procesar tu pregunta.';
+      
+      if (error instanceof Error) {
+        if (error.message.includes('API key') || error.message.includes('GOOGLE_GENAI_API_KEY')) {
+          errorContent = '🔑 La API key de Google AI no está configurada. Por favor, configura GOOGLE_GENAI_API_KEY en el archivo .env.local para que pueda funcionar correctamente.';
+        } else if (error.message.includes('network') || error.message.includes('fetch')) {
+          errorContent = '🌐 Error de conexión. Verifica tu conexión a internet e inténtalo de nuevo.';
+        } else {
+          errorContent = `❌ Error: ${error.message}. Inténtalo de nuevo más tarde.`;
+        }
+      }
+      
+      const errorMessage: Message = { role: 'assistant', content: errorContent };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);

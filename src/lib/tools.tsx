@@ -3,7 +3,8 @@
 import React from 'react';
 import { 
     Home, Percent, Briefcase, Calculator, Gift, Landmark, CalendarClock, AreaChart, 
-    BookCopy, Search, Plane, ShieldAlert, Clock, SpellCheck, Link, Wallet
+    BookCopy, Search, Plane, ShieldAlert, Clock, SpellCheck, Link, Wallet, 
+    FileText, TrendingUp, Scale, DollarSign
 } from 'lucide-react';
 import { Dashboard } from '@/tools/Dashboard';
 import { IgvCalculator } from '@/tools/IgvCalculator';
@@ -21,6 +22,10 @@ import { InteresesMoratoriosCalculator } from '@/tools/InteresesMoratoriosCalcul
 import { LiquidacionBeneficiosCalculator } from '@/tools/LiquidacionBeneficiosCalculator';
 import { NumeroALetrasConverter } from '@/tools/NumeroALetrasConverter';
 import { AccesosRapidos } from '@/tools/AccesosRapidos';
+import { EstadosFinancieros } from '@/tools/EstadosFinancieros';
+import { DashboardFinanciero } from '@/tools/DashboardFinanciero';
+import { ConciliacionBancaria } from '@/tools/ConciliacionBancaria';
+import { PresupuestosProyecciones } from '@/tools/PresupuestosProyecciones';
 
 export interface Tool {
   id: string;
@@ -46,4 +51,8 @@ export const tools: Tool[] = [
   { id: 'liquidacion', name: 'Liquidación', icon: <Calculator className="w-4 h-4" />, component: LiquidacionBeneficiosCalculator },
   { id: 'conversor', name: 'Nº a Letras', icon: <SpellCheck className="w-4 h-4" />, component: NumeroALetrasConverter },
   { id: 'accesos', name: 'Accesos Rápidos', icon: <Link className="w-4 h-4" />, component: AccesosRapidos },
+  { id: 'estados-financieros', name: 'Estados Financieros', icon: <FileText className="w-4 h-4" />, component: EstadosFinancieros },
+  { id: 'dashboard-financiero', name: 'Dashboard Financiero', icon: <TrendingUp className="w-4 h-4" />, component: DashboardFinanciero },
+  { id: 'conciliacion-bancaria', name: 'Conciliación Bancaria', icon: <Scale className="w-4 h-4" />, component: ConciliacionBancaria },
+  { id: 'presupuestos', name: 'Presupuestos y Proyecciones', icon: <DollarSign className="w-4 h-4" />, component: PresupuestosProyecciones },
 ];
