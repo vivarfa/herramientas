@@ -29,37 +29,33 @@ type FinancialData = {
     ventasMensuales: { month: string; ventas: number }[];
 };
 
-// --- VALORES INICIALES DE EJEMPLO ---
+// --- VALORES INICIALES VACÍOS ---
 const initialData: FinancialData = {
-    activoCorriente: '50000',
-    pasivoCorriente: '25000',
-    totalPasivo: '40000',
-    totalActivo: '80000',
-    totalPatrimonio: '40000',
-    utilidadNeta: '12000',
-    ventasNetas: '150000',
-    ventasMensuales: [
-        { month: 'Ene', ventas: 12000 }, { month: 'Feb', ventas: 11000 },
-        { month: 'Mar', ventas: 15000 }, { month: 'Abr', ventas: 13000 },
-        { month: 'May', ventas: 16000 }, { month: 'Jun', ventas: 18000 },
-    ],
+    activoCorriente: '',
+    pasivoCorriente: '',
+    totalPasivo: '',
+    totalActivo: '',
+    totalPatrimonio: '',
+    utilidadNeta: '',
+    ventasNetas: '',
+    ventasMensuales: [],
 };
 
 // --- COMPONENTES VISUALES ---
 const KpiCard = ({ title, value, interpretation, icon }: { title: string; value: string; interpretation: string; icon: React.ReactNode }) => (
     <motion.div 
-        className="bg-card border rounded-lg p-4 flex flex-col justify-between"
+        className="bg-card border rounded-lg p-3 sm:p-4 flex flex-col justify-between min-h-[120px] sm:min-h-[140px]"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        whileHover={{ scale: 1.03, y: -5 }}
+        whileHover={{ scale: 1.02, y: -2 }}
         transition={{ type: 'spring', stiffness: 300 }}
     >
-        <div className="flex items-start justify-between">
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <div className="text-primary">{icon}</div>
+        <div className="flex items-start justify-between mb-2">
+            <p className="text-xs sm:text-sm font-medium text-muted-foreground leading-tight">{title}</p>
+            <div className="text-primary flex-shrink-0 ml-2">{icon}</div>
         </div>
-        <p className="text-2xl font-bold mt-2">{value}</p>
-        <p className="text-xs text-muted-foreground mt-1">{interpretation}</p>
+        <p className="text-xl sm:text-2xl font-bold mb-1">{value}</p>
+        <p className="text-xs text-muted-foreground leading-tight">{interpretation}</p>
     </motion.div>
 );
 
@@ -116,7 +112,7 @@ export function DashboardFinanciero() {
                 >
                     <div className="p-4 border rounded-lg mb-6 space-y-4 bg-muted/30">
                         <h3 className="text-lg font-semibold">Ingresar Datos del Balance y EERR</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                             <InputField label="Activo Corriente" value={data.activoCorriente} onChange={v => handleInputChange('activoCorriente', v)} />
                             <InputField label="Pasivo Corriente" value={data.pasivoCorriente} onChange={v => handleInputChange('pasivoCorriente', v)} />
                             <InputField label="Total Activo" value={data.totalActivo} onChange={v => handleInputChange('totalActivo', v)} />
@@ -145,45 +141,57 @@ export function DashboardFinanciero() {
             </Alert>
             
             {/* --- Sección de KPIs Principales --- */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
                 <KpiCard title="Liquidez Corriente" value={kpis.liquidezCorriente.toFixed(2)} interpretation={kpis.liquidezInterp} icon={<Scale />} />
                 <KpiCard title="Nivel de Endeudamiento" value={`${(kpis.endeudamiento * 100).toFixed(1)}%`} interpretation={kpis.endeudamientoInterp} icon={<Landmark />} />
                 <KpiCard title="Margen de Utilidad Neta" value={`${(kpis.margenNeto * 100).toFixed(1)}%`} interpretation={kpis.margenInterp} icon={<Percent />} />
             </div>
 
             {/* --- Sección de Gráficos --- */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-                    <h3 className="text-lg font-semibold text-center mb-4">Evolución de Ventas Mensuales</h3>
-                    <div style={{ width: '100%', height: 300 }}>
-                        <ResponsiveContainer>
-                            <LineChart data={data.ventasMensuales} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="month" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Line type="monotone" dataKey="ventas" stroke="#8884d8" activeDot={{ r: 8 }} />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 sm:gap-8">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="bg-card border rounded-lg p-3 sm:p-4">
+                    <h3 className="text-base sm:text-lg font-semibold text-center mb-3 sm:mb-4">Evolución de Ventas Mensuales</h3>
+                    {data.ventasMensuales.length > 0 ? (
+                        <div className="w-full h-[250px] sm:h-[300px]">
+                            <ResponsiveContainer>
+                                <LineChart data={data.ventasMensuales} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+                                    <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                                    <XAxis dataKey="month" fontSize={12} />
+                                    <YAxis fontSize={12} />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Line type="monotone" dataKey="ventas" stroke="#8884d8" strokeWidth={2} activeDot={{ r: 6 }} />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                    ) : (
+                        <div className="h-[250px] sm:h-[300px] flex items-center justify-center text-muted-foreground">
+                            <p className="text-sm text-center">No hay datos de ventas mensuales para mostrar</p>
+                        </div>
+                    )}
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
-                    <h3 className="text-lg font-semibold text-center mb-4">Composición del Financiamiento</h3>
-                    <div style={{ width: '100%', height: 300 }}>
-                        <ResponsiveContainer>
-                            <BarChart layout="vertical" data={[{ name: 'Financiamiento', pasivos: parseFloat(data.totalPasivo), patrimonio: parseFloat(data.totalPatrimonio) }]} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis type="number" />
-                                <YAxis type="category" dataKey="name" hide />
-                                <Tooltip />
-                                <Legend />
-                                <Bar dataKey="pasivos" stackId="a" fill="#ef4444" name="Pasivos (Deuda)" />
-                                <Bar dataKey="patrimonio" stackId="a" fill="#3b82f6" name="Patrimonio (Propio)" />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="bg-card border rounded-lg p-3 sm:p-4">
+                    <h3 className="text-base sm:text-lg font-semibold text-center mb-3 sm:mb-4">Composición del Financiamiento</h3>
+                    {(parseFloat(data.totalPasivo) > 0 || parseFloat(data.totalPatrimonio) > 0) ? (
+                        <div className="w-full h-[250px] sm:h-[300px]">
+                            <ResponsiveContainer>
+                                <BarChart layout="vertical" data={[{ name: 'Financiamiento', pasivos: parseFloat(data.totalPasivo) || 0, patrimonio: parseFloat(data.totalPatrimonio) || 0 }]} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                                    <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                                    <XAxis type="number" fontSize={12} />
+                                    <YAxis type="category" dataKey="name" hide />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar dataKey="pasivos" stackId="a" fill="#ef4444" name="Pasivos (Deuda)" />
+                                    <Bar dataKey="patrimonio" stackId="a" fill="#3b82f6" name="Patrimonio (Propio)" />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    ) : (
+                        <div className="h-[250px] sm:h-[300px] flex items-center justify-center text-muted-foreground">
+                            <p className="text-sm text-center">No hay datos financieros para mostrar</p>
+                        </div>
+                    )}
                 </motion.div>
             </div>
         </ToolCard>
