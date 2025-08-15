@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 230 50% 95%;
+    --foreground: 231 48% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 231 48% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 231 48% 15%;
+    --primary: 231 48% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 230 50% 90%;
+    --secondary-foreground: 231 48% 25%;
+    --muted: 230 50% 90%;
+    --muted-foreground: 231 48% 40%;
+    --accent: 266 39% 58%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 230 20% 85%;
+    --input: 230 20% 90%;
+    --ring: 231 48% 54%;
+    --radius: 0.5rem;
+
+    /* Custom Sidebar vars */
+    --sidebar: 230 50% 98%;
+    --sidebar-foreground: 231 48% 25%;
+    --sidebar-border: 230 20% 88%;
+    --sidebar-accent: 230 50% 92%;
+    --sidebar-accent-foreground: 231 48% 20%;
+    --sidebar-ring: 231 48% 54%;
+  }
+ 
+  .dark {
+    --background: 231 20% 12%;
+    --foreground: 230 50% 95%;
+    --card: 231 20% 18%;
+    --card-foreground: 230 50% 95%;
+    --popover: 231 20% 12%;
+    --popover-foreground: 230 50% 95%;
+    --primary: 231 48% 64%;
+    --primary-foreground: 231 20% 12%;
+    --secondary: 231 20% 25%;
+    --secondary-foreground: 230 50% 95%;
+    --muted: 231 20% 25%;
+    --muted-foreground: 230 50% 80%;
+    --accent: 266 39% 68%;
+    --accent-foreground: 231 20% 12%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 231 20% 25%;
+    --input: 231 20% 22%;
+    --ring: 231 48% 64%;
+    /* Custom Sidebar vars */
+    --sidebar: 231 20% 15%;
+    --sidebar-foreground: 230 50% 85%;
+    --sidebar-border: 231 20% 22%;
+    --sidebar-accent: 231 20% 28%;
+    --sidebar-accent-foreground: 230 50% 98%;
+    --sidebar-ring: 231 48% 64%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Global override for development panels */
+  body *[style*="position: fixed"][style*="bottom: 16px"],
+  body *[style*="position: fixed"][style*="left: 16px"],
+  body *[style*="position: fixed"][style*="bottom: 20px"],
+  body *[style*="position: fixed"][style*="left: 20px"] {
+    display: none !important;
+  }
+}
+
+@layer utilities {
+  /* Animaciones personalizadas */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  .animate-bounce-subtle {
+    animation: bounceSubtle 0.6s ease-in-out;
+  }
+  
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+  
+  /* Efectos de hover mejorados */
+  .hover-lift {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(var(--primary), 0.3);
+  }
+
+  /* Responsive utilities */
+  .responsive-container {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4;
+  }
+  
+  .responsive-text {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+  
+  /* Hide any potential floating elements that might interfere */
+  .hide-floating-elements {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Ensure proper stacking for settings */
+  .settings-overlay {
+    z-index: 50;
+  }
+  
+  /* Ensure BiaChatWidget is visible */
+  .bia-chat-widget {
+    display: block !important;
+    z-index: 40;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceSubtle {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-4px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(var(--primary), 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(var(--primary), 0.4);
+  }
+}
+
+/* Scrollbar utilities */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
