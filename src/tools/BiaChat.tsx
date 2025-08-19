@@ -87,7 +87,7 @@ export function BiaChat() {
         <div className="flex items-center justify-between">
           <div>
             <CardTitle>B-IA: Tu Aliado Inteligente</CardTitle>
-            <CardDescription>Respondo tus preguntas de contabilidad en Perú.</CardDescription>
+            <CardDescription>Experto en contabilidad peruana, finanzas y tributación.</CardDescription>
           </div>
           <Button variant="outline" size="sm" onClick={handleNewChat}>
             <RotateCw className="w-4 h-4 mr-2"/>
@@ -148,7 +148,7 @@ export function BiaChat() {
           <Textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Escribe tu pregunta aquí..."
+            placeholder="Escribe tu consulta contable aquí..."
             className="flex-grow resize-none"
             rows={1}
             disabled={isLoading || !canQuery}

@@ -49,6 +49,6 @@ export const tools: Tool[] = [
   { id: 'liquidacion', name: 'Liquidación', icon: <Calculator className="w-4 h-4" />, component: LiquidacionBeneficiosCalculator },
   { id: 'conversor', name: 'Nº a Letras', icon: <SpellCheck className="w-4 h-4" />, component: NumeroALetrasConverter },
   { id: 'accesos', name: 'Accesos Rápidos', icon: <Link className="w-4 h-4" />, component: AccesosRapidos },
-  { id: 'dashboard-financiero', name: 'Dashboard Financiero', icon: <TrendingUp className="w-4 h-4" />, component: DashboardFinanciero },
+  { id: 'dashboard-financiero', name: 'Ratios Financieros', icon: <TrendingUp className="w-4 h-4" />, component: DashboardFinanciero },
   { id: 'calculadora-prestamos', name: 'Calculadora de Préstamos', icon: <DollarSign className="w-4 h-4" />, component: CalculadoraPrestamos },
 ];

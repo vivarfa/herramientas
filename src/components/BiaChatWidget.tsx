@@ -157,7 +157,18 @@ export function BiaChatWidget() {
               <div className="space-y-4">
                  {messages.length === 0 && (
                   <div className="text-center text-muted-foreground p-8 flex flex-col items-center">
-                    <div className="mb-4">
+                    <motion.div 
+                      className="mb-4"
+                      animate={{
+                        scale: [1, 1.05, 1],
+                        rotate: [0, 2, -2, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        repeatType: "reverse"
+                      }}
+                    >
                       <Image
                         src="/biluz-robot.png"
                         alt="B-IA Robot"
@@ -165,15 +176,20 @@ export function BiaChatWidget() {
                         height={48}
                         className="rounded-full"
                       />
-                    </div>
-                    <p>¡Hola! Soy B-IA, tu asistente contable.</p>
-                    <p>¿En qué puedo ayudarte hoy?</p>
+                    </motion.div>
+                    <p>¡Hola! Soy B-IA, tu experto en contabilidad.</p>
+                    <p>Especializado en contabilidad peruana, finanzas y tributación.</p>
+                    <p>¿Qué consulta contable tienes hoy?</p>
                   </div>
                  )}
                 {messages.map((message, index) => (
                   <div key={index} className={cn("flex items-start gap-3", message.role === 'user' ? 'justify-end' : 'justify-start')}>
                     {message.role === 'assistant' && (
-                      <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+                      <motion.div 
+                        className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.2 }}
+                      >
                         <Image
                           src="/biluz-robot.png"
                           alt="B-IA Robot"
@@ -181,7 +197,7 @@ export function BiaChatWidget() {
                           height={32}
                           className="w-full h-full object-cover"
                         />
-                      </div>
+                      </motion.div>
                     )}
                     <div className={cn("max-w-[80%] rounded-lg p-3 text-sm", message.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted')}>
                       <p className="whitespace-pre-wrap">{message.content}</p>
@@ -192,8 +208,23 @@ export function BiaChatWidget() {
                   </div>
                 ))}
                 {isLoading && (
-                  <div className="flex items-start gap-3 justify-start">
-                    <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-start gap-3 justify-start"
+                  >
+                    <motion.div 
+                      className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0"
+                      animate={{
+                        scale: [1, 1.05, 1],
+                        rotate: [0, 1, -1, 0]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatType: "reverse"
+                      }}
+                    >
                       <Image
                         src="/biluz-robot.png"
                         alt="B-IA Robot"
@@ -201,12 +232,49 @@ export function BiaChatWidget() {
                         height={32}
                         className="w-full h-full object-cover"
                       />
+                    </motion.div>
+                    <div className="bg-muted rounded-lg p-3 flex items-center gap-2">
+                      <div className="flex space-x-1">
+                        <motion.div
+                          className="w-2 h-2 bg-primary rounded-full"
+                          animate={{
+                            scale: [1, 1.2, 1],
+                            opacity: [0.5, 1, 0.5]
+                          }}
+                          transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            delay: 0
+                          }}
+                        />
+                        <motion.div
+                          className="w-2 h-2 bg-primary rounded-full"
+                          animate={{
+                            scale: [1, 1.2, 1],
+                            opacity: [0.5, 1, 0.5]
+                          }}
+                          transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            delay: 0.2
+                          }}
+                        />
+                        <motion.div
+                          className="w-2 h-2 bg-primary rounded-full"
+                          animate={{
+                            scale: [1, 1.2, 1],
+                            opacity: [0.5, 1, 0.5]
+                          }}
+                          transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            delay: 0.4
+                          }}
+                        />
+                      </div>
+                      <span className="text-xs text-muted-foreground ml-2">B-IA está escribiendo...</span>
                     </div>
-                    <div className="bg-muted rounded-lg p-3 space-y-2">
-                      <Skeleton className="h-4 w-[180px]" />
-                      <Skeleton className="h-4 w-[150px]" />
-                    </div>
-                  </div>
+                  </motion.div>
                 )}
               </div>
             </ScrollArea>
@@ -221,7 +289,7 @@ export function BiaChatWidget() {
               <Textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Escribe tu pregunta..."
+                placeholder="Escribe tu consulta contable..."
                 className="flex-grow resize-none"
                 rows={1}
                 disabled={isLoading || !canQuery}
