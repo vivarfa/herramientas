@@ -189,7 +189,6 @@ export function Dashboard({ setActiveToolId }: DashboardProps) {
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 300 }}
                 >
-                    © BILUZ - Todos los Derechos Reservados
                 </motion.p>
             </motion.footer>
         </div>

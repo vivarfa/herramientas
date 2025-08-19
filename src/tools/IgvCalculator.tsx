@@ -301,7 +301,6 @@ Precio Unitario: ${unitPrice.toFixed(dec)}
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              © BILUZ - Todos los Derechos Reservados
             </motion.p>
           </CardFooter>
         </motion.div>

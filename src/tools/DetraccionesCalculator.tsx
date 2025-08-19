@@ -148,7 +148,6 @@ export function DetraccionesCalculator() {
             </CardContent>
              <CardFooter className='flex-col items-start gap-2'>
                 <p className="text-xs text-muted-foreground w-full text-center">
-                    © BILUZ - Todos los Derechos Reservados
                 </p>
             </CardFooter>
         </Card>

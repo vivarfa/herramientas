@@ -116,6 +116,13 @@ export function AppLayout({ children, activeToolId, onToolSelect }: AppLayoutPro
           )}>
             {children}
           </div>
+          
+          {/* Pie de página */}
+          <footer className="border-t bg-background/95 backdrop-blur-sm px-4 py-3">
+            <p className="text-xs text-muted-foreground text-center">
+              © {new Date().getFullYear()} BILUZ - Todos los Derechos Reservados
+            </p>
+          </footer>
         </SidebarInset>
       
       {/* Mobile Bottom Navigation */}

@@ -372,7 +372,6 @@ export function CtsCalculator() {
             </CardContent>
             <CardFooter>
                  <p className="text-xs text-muted-foreground w-full text-center">
-                    © BILUZ - Todos los Derechos Reservados
                 </p>
             </CardFooter>
         </Card>

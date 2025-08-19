@@ -6,10 +6,9 @@ interface ToolCardProps {
   title: string;
   description: string;
   children: React.ReactNode; // Aquí irá el contenido específico de cada herramienta
-  footerText?: string;
 }
 
-export function ToolCard({ title, description, children, footerText }: ToolCardProps) {
+export function ToolCard({ title, description, children }: ToolCardProps) {
   return (
     <Card className="flex flex-col h-full">
       <CardHeader>
@@ -19,11 +18,6 @@ export function ToolCard({ title, description, children, footerText }: ToolCardP
       <CardContent className="space-y-6 flex-grow">
         {children}
       </CardContent>
-      <CardFooter>
-        <p className="text-xs text-muted-foreground w-full text-center">
-          {footerText || '© BILUZ - Todos los Derechos Reservados'}
-        </p>
-      </CardFooter>
     </Card>
   );
 }
