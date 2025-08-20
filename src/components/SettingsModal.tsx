@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import {
   Dialog,
   DialogContent,
@@ -14,6 +15,8 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { 
   Settings, 
   Info, 
@@ -29,7 +32,11 @@ import {
   Zap,
   Shield,
   Clock,
-  Users
+  Users,
+  Send,
+  Heart,
+  CreditCard,
+  X
 } from "lucide-react"
 import { ThemeToggle } from "./ThemeToggle"
 import { Label } from "./ui/label"
@@ -95,6 +102,36 @@ export function SettingsModal() {
     ];
     return `${months[now.getMonth()]} ${now.getFullYear()}`;
   };
+
+  // Estados para el minichat de soporte
+  const [showSupportChat, setShowSupportChat] = useState(false)
+  const [showSuggestionForm, setShowSuggestionForm] = useState(false)
+  const [supportMessage, setSupportMessage] = useState('')
+  const [suggestionMessage, setSuggestionMessage] = useState('')
+  const [userEmail, setUserEmail] = useState('')
+  const [userName, setUserName] = useState('')
+
+  // Función para enviar mensaje de soporte
+  const handleSendSupport = () => {
+    const subject = encodeURIComponent('Soporte Técnico - Herramientas Contables Biluz')
+    const body = encodeURIComponent(`Nombre: ${userName}\nEmail: ${userEmail}\n\nMensaje:\n${supportMessage}`)
+    window.open(`mailto:avivarfa@gmail.com?subject=${subject}&body=${body}`)
+    setSupportMessage('')
+    setUserEmail('')
+    setUserName('')
+    setShowSupportChat(false)
+  }
+
+  // Función para enviar sugerencia
+  const handleSendSuggestion = () => {
+    const subject = encodeURIComponent('Sugerencia - Herramientas Contables Biluz')
+    const body = encodeURIComponent(`Nombre: ${userName}\nEmail: ${userEmail}\n\nSugerencia:\n${suggestionMessage}`)
+    window.open(`mailto:avivarfa@gmail.com?subject=${subject}&body=${body}`)
+    setSuggestionMessage('')
+    setUserEmail('')
+    setUserName('')
+    setShowSuggestionForm(false)
+  }
 
   return (
     <Dialog>
@@ -284,37 +321,184 @@ export function SettingsModal() {
                      </h4>
                      
                      <div className="grid gap-3">
-                       <div className="flex items-center justify-between p-3 border rounded-lg">
-                         <div>
-                           <p className="font-medium">Soporte Técnico</p>
-                           <p className="text-sm text-muted-foreground">¿Tienes problemas técnicos?</p>
+                       <div className="space-y-3">
+                         <div className="flex items-center justify-between p-3 border rounded-lg">
+                           <div>
+                             <p className="font-medium">Soporte Técnico</p>
+                             <p className="text-sm text-muted-foreground">¿Tienes problemas técnicos?</p>
+                           </div>
+                           <Button 
+                             variant="outline" 
+                             size="sm"
+                             onClick={() => setShowSupportChat(!showSupportChat)}
+                           >
+                             <Mail className="h-4 w-4 mr-2" />
+                             Contactar
+                           </Button>
                          </div>
-                         <Button variant="outline" size="sm">
-                           <Mail className="h-4 w-4 mr-2" />
-                           Contactar
-                         </Button>
+                         
+                         {showSupportChat && (
+                           <div className="p-4 border rounded-lg bg-muted/20 space-y-3">
+                             <div className="flex items-center justify-between">
+                               <h5 className="font-medium">Formulario de Soporte</h5>
+                               <Button 
+                                 variant="ghost" 
+                                 size="sm"
+                                 onClick={() => setShowSupportChat(false)}
+                               >
+                                 <X className="h-4 w-4" />
+                               </Button>
+                             </div>
+                             <div className="space-y-3">
+                               <div>
+                                 <Label htmlFor="support-name">Nombre</Label>
+                                 <Input
+                                   id="support-name"
+                                   placeholder="Tu nombre"
+                                   value={userName}
+                                   onChange={(e) => setUserName(e.target.value)}
+                                 />
+                               </div>
+                               <div>
+                                 <Label htmlFor="support-email">Email</Label>
+                                 <Input
+                                   id="support-email"
+                                   type="email"
+                                   placeholder="tu@email.com"
+                                   value={userEmail}
+                                   onChange={(e) => setUserEmail(e.target.value)}
+                                 />
+                               </div>
+                               <div>
+                                 <Label htmlFor="support-message">Describe tu problema</Label>
+                                 <Textarea
+                                   id="support-message"
+                                   placeholder="Describe detalladamente el problema que estás experimentando..."
+                                   value={supportMessage}
+                                   onChange={(e) => setSupportMessage(e.target.value)}
+                                   rows={4}
+                                 />
+                               </div>
+                               <Button 
+                                 onClick={handleSendSupport}
+                                 disabled={!userName || !userEmail || !supportMessage}
+                                 className="w-full"
+                               >
+                                 <Send className="h-4 w-4 mr-2" />
+                                 Enviar Mensaje
+                               </Button>
+                             </div>
+                           </div>
+                         )}
                        </div>
                        
-                       <div className="flex items-center justify-between p-3 border rounded-lg">
-                         <div>
-                           <p className="font-medium">Sugerencias</p>
-                           <p className="text-sm text-muted-foreground">Comparte tus ideas para mejorar</p>
+                       <div className="space-y-3">
+                         <div className="flex items-center justify-between p-3 border rounded-lg">
+                           <div>
+                             <p className="font-medium">Sugerencias</p>
+                             <p className="text-sm text-muted-foreground">Comparte tus ideas para mejorar</p>
+                           </div>
+                           <Button 
+                             variant="outline" 
+                             size="sm"
+                             onClick={() => setShowSuggestionForm(!showSuggestionForm)}
+                           >
+                             <Lightbulb className="h-4 w-4 mr-2" />
+                             Enviar Idea
+                           </Button>
                          </div>
-                         <Button variant="outline" size="sm">
-                           <Lightbulb className="h-4 w-4 mr-2" />
-                           Enviar Idea
-                         </Button>
+                         
+                         {showSuggestionForm && (
+                           <div className="p-4 border rounded-lg bg-muted/20 space-y-3">
+                             <div className="flex items-center justify-between">
+                               <h5 className="font-medium">Formulario de Sugerencias</h5>
+                               <Button 
+                                 variant="ghost" 
+                                 size="sm"
+                                 onClick={() => setShowSuggestionForm(false)}
+                               >
+                                 <X className="h-4 w-4" />
+                               </Button>
+                             </div>
+                             <div className="space-y-3">
+                               <div>
+                                 <Label htmlFor="suggestion-name">Nombre</Label>
+                                 <Input
+                                   id="suggestion-name"
+                                   placeholder="Tu nombre"
+                                   value={userName}
+                                   onChange={(e) => setUserName(e.target.value)}
+                                 />
+                               </div>
+                               <div>
+                                 <Label htmlFor="suggestion-email">Email</Label>
+                                 <Input
+                                   id="suggestion-email"
+                                   type="email"
+                                   placeholder="tu@email.com"
+                                   value={userEmail}
+                                   onChange={(e) => setUserEmail(e.target.value)}
+                                 />
+                               </div>
+                               <div>
+                                 <Label htmlFor="suggestion-message">Tu sugerencia</Label>
+                                 <Textarea
+                                   id="suggestion-message"
+                                   placeholder="Comparte tu idea para mejorar nuestras herramientas..."
+                                   value={suggestionMessage}
+                                   onChange={(e) => setSuggestionMessage(e.target.value)}
+                                   rows={4}
+                                 />
+                               </div>
+                               <Button 
+                                 onClick={handleSendSuggestion}
+                                 disabled={!userName || !userEmail || !suggestionMessage}
+                                 className="w-full"
+                               >
+                                 <Send className="h-4 w-4 mr-2" />
+                                 Enviar Sugerencia
+                               </Button>
+                             </div>
+                           </div>
+                         )}
                        </div>
                        
-                       <div className="flex items-center justify-between p-3 border rounded-lg">
-                         <div>
-                           <p className="font-medium">Documentación</p>
-                           <p className="text-sm text-muted-foreground">Guías completas y tutoriales</p>
+                       <div className="space-y-3">
+                         <div className="p-3 border rounded-lg">
+                           <div className="mb-3">
+                             <p className="font-medium flex items-center gap-2">
+                               <Heart className="h-4 w-4 text-red-500" />
+                               Apoya Nuestro Trabajo
+                             </p>
+                             <p className="text-sm text-muted-foreground">Tu apoyo nos ayuda a seguir mejorando estas herramientas</p>
+                           </div>
+                           
+                           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                             <Button 
+                               variant="outline" 
+                               className="h-auto p-4 flex flex-col items-center gap-2"
+                               onClick={() => window.open('https://link.mercadopago.com.pe/vivarfa', '_blank')}
+                             >
+                               <CreditCard className="h-6 w-6 text-blue-600" />
+                               <div className="text-center">
+                                 <p className="font-medium">MercadoPago</p>
+                                 <p className="text-xs text-muted-foreground">Pago seguro en Perú</p>
+                               </div>
+                             </Button>
+                             
+                             <Button 
+                               variant="outline" 
+                               className="h-auto p-4 flex flex-col items-center gap-2"
+                               onClick={() => window.open('https://paypal.me/billcode', '_blank')}
+                             >
+                               <CreditCard className="h-6 w-6 text-blue-500" />
+                               <div className="text-center">
+                                 <p className="font-medium">PayPal</p>
+                                 <p className="text-xs text-muted-foreground">Pago internacional</p>
+                               </div>
+                             </Button>
+                           </div>
                          </div>
-                         <Button variant="outline" size="sm">
-                           <BookOpen className="h-4 w-4 mr-2" />
-                           Ver Docs
-                         </Button>
                        </div>
                      </div>
                    </div>
@@ -322,13 +506,21 @@ export function SettingsModal() {
                    <Separator />
                    
                    <div className="bg-muted/50 p-4 rounded-lg">
-                     <h4 className="font-semibold mb-2">Información de la Aplicación</h4>
-                     <div className="text-sm text-muted-foreground space-y-1">
-                       <p>Versión: 1.9</p>
-                       <p>Última actualización: {getCurrentDate()}</p>
-                       <p>Desarrollado por: BillCode</p>
+                       <h4 className="font-semibold mb-2">Información de la Aplicación</h4>
+                       <div className="text-sm text-muted-foreground space-y-1">
+                         <p>Versión: 2.0</p>
+                         <p>Última actualización: {getCurrentDate()}</p>
+                         <p>
+                           Desarrollado por:{' '}
+                           <button
+                             onClick={() => window.open('https://www.billcodex.com', '_blank')}
+                             className="text-primary hover:underline font-medium cursor-pointer"
+                           >
+                             BillCode
+                           </button>
+                         </p>
+                       </div>
                      </div>
-                   </div>
                  </CardContent>
                </Card>
              </TabsContent>
