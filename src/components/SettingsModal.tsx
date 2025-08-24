@@ -516,7 +516,7 @@ export function SettingsModal() {
                              onClick={() => window.open('https://www.billcodex.com', '_blank')}
                              className="text-primary hover:underline font-medium cursor-pointer"
                            >
-                             BillCode
+                             BillCodex
                            </button>
                          </p>
                        </div>

@@ -119,9 +119,20 @@ export function AppLayout({ children, activeToolId, onToolSelect }: AppLayoutPro
           
           {/* Pie de página */}
           <footer className="border-t bg-background/95 backdrop-blur-sm px-4 py-3">
-            <p className="text-xs text-muted-foreground text-center">
-              © {new Date().getFullYear()} BILUZ - Todos los Derechos Reservados
-            </p>
+            <div className="text-xs text-muted-foreground text-center space-y-1">
+              <p>© {new Date().getFullYear()} BILUZ - Todos los Derechos Reservados</p>
+              <p>
+                Desarrollado por{" "}
+                <a 
+                  href="https://www.billcodex.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary hover:text-primary/80 transition-colors duration-200 font-medium"
+                >
+                  BillCodex
+                </a>
+              </p>
+            </div>
           </footer>
         </SidebarInset>
       

@@ -11,8 +11,10 @@ import { Copy, ClipboardPaste } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 import { copyToClipboard } from '@/lib/utils'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Switch } from '@/components/ui/switch'
 
 type ActiveField = 'total' | 'igv';
+type CalculationMode = 'with_igv' | 'without_igv';
 
 export function IgvCalculator() {
   const { toast } = useToast();
@@ -23,6 +25,7 @@ export function IgvCalculator() {
   const [unitsStr, setUnitsStr] = useState("");
   const [decimals, setDecimals] = useState("4");
   const [activeField, setActiveField] = useState<ActiveField>('total');
+  const [calculationMode, setCalculationMode] = useState<CalculationMode>('with_igv');
 
   const performCalculation = useCallback(() => {
     const total = parseFloat(totalStr) || 0;
@@ -33,22 +36,40 @@ export function IgvCalculator() {
     let newIgv = 0;
     let newTotal = 0;
 
-    if (activeField === 'total') {
-      newTotal = total;
-      newBase = igvRate > -1 ? newTotal / (1 + igvRate) : 0;
-      newIgv = newTotal - newBase;
-      if (igvAmountStr !== newIgv.toFixed(2)) {
-         setIgvAmountStr(newIgv.toFixed(2));
+    if (calculationMode === 'with_igv') {
+      if (activeField === 'total') {
+        newTotal = total;
+        newBase = igvRate > -1 ? newTotal / (1 + igvRate) : 0;
+        newIgv = newTotal - newBase;
+        if (igvAmountStr !== newIgv.toFixed(2)) {
+           setIgvAmountStr(newIgv.toFixed(2));
+        }
+      } else { // activeField === 'igv'
+        newIgv = igvAmount;
+        newBase = igvRate > 0 ? newIgv / igvRate : 0;
+        newTotal = newBase + newIgv;
+        if (totalStr !== newTotal.toFixed(2)) {
+            setTotalStr(newTotal.toFixed(2));
+        }
       }
-    } else { // activeField === 'igv'
-      newIgv = igvAmount;
-      newBase = igvRate > 0 ? newIgv / igvRate : 0;
-      newTotal = newBase + newIgv;
-      if (totalStr !== newTotal.toFixed(2)) {
-          setTotalStr(newTotal.toFixed(2));
+    } else { // calculationMode === 'without_igv'
+      if (activeField === 'total') {
+        newBase = total;
+        newIgv = newBase * igvRate;
+        newTotal = newBase + newIgv;
+        if (igvAmountStr !== newIgv.toFixed(2)) {
+           setIgvAmountStr(newIgv.toFixed(2));
+        }
+      } else { // activeField === 'igv'
+        newIgv = igvAmount;
+        newBase = igvRate > 0 ? newIgv / igvRate : 0;
+        newTotal = newBase + newIgv;
+        if (totalStr !== newTotal.toFixed(2)) {
+            setTotalStr(newTotal.toFixed(2));
+        }
       }
     }
-  }, [totalStr, igvRateStr, igvAmountStr, activeField, setIgvAmountStr, setTotalStr]);
+  }, [totalStr, igvRateStr, igvAmountStr, activeField, calculationMode, setIgvAmountStr, setTotalStr]);
 
 
   useEffect(() => {
@@ -59,20 +80,44 @@ export function IgvCalculator() {
     const totalVal = parseFloat(totalStr) || 0;
     const igvRateVal = (parseFloat(igvRateStr) || 0) / 100;
     const unitsVal = parseInt(unitsStr, 10) || 0;
+    const igvAmountVal = parseFloat(igvAmountStr) || 0;
 
-    const baseVal = totalVal / (1 + igvRateVal);
-    const igvVal = totalVal - baseVal;
+    let baseVal = 0;
+    let igvVal = 0;
+    let finalTotal = 0;
+
+    if (calculationMode === 'with_igv') {
+      if (activeField === 'total') {
+        finalTotal = totalVal;
+        baseVal = igvRateVal > 0 ? finalTotal / (1 + igvRateVal) : finalTotal;
+        igvVal = finalTotal - baseVal;
+      } else {
+        igvVal = igvAmountVal;
+        baseVal = igvRateVal > 0 ? igvVal / igvRateVal : 0;
+        finalTotal = baseVal + igvVal;
+      }
+    } else { // without_igv
+      if (activeField === 'total') {
+        baseVal = totalVal;
+        igvVal = baseVal * igvRateVal;
+        finalTotal = baseVal + igvVal;
+      } else {
+        igvVal = igvAmountVal;
+        baseVal = igvRateVal > 0 ? igvVal / igvRateVal : 0;
+        finalTotal = baseVal + igvVal;
+      }
+    }
     
     const unitPriceVal = unitsVal > 0 ? baseVal / unitsVal : 0;
 
     return {
       base: baseVal,
       igv: igvVal,
-      total: totalVal,
+      total: finalTotal,
       units: unitsVal,
       unitPrice: unitPriceVal,
     }
-  }, [totalStr, igvRateStr, unitsStr]);
+  }, [totalStr, igvRateStr, unitsStr, igvAmountStr, calculationMode, activeField]);
 
   const handleCopy = (text: string, fieldName: string) => {
     copyToClipboard(text, () => {
@@ -114,13 +159,55 @@ Precio Unitario: ${unitPrice.toFixed(dec)}
         </motion.div>
         <CardContent className="space-y-4 flex-grow">
         
+        {/* Modo de Cálculo */}
+        <motion.div 
+          className="space-y-3 p-4 bg-muted/30 rounded-lg border"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.15 }}
+        >
+          <div className="flex items-center justify-between">
+            <Label className="text-sm font-medium">Modo de Cálculo:</Label>
+            <div className="flex items-center space-x-3">
+              <Label htmlFor="calculation-mode" className={`text-sm transition-colors ${
+                calculationMode === 'with_igv' ? 'text-primary font-medium' : 'text-muted-foreground'
+              }`}>
+                Con IGV
+              </Label>
+              <Switch
+                id="calculation-mode"
+                checked={calculationMode === 'without_igv'}
+                onCheckedChange={(checked) => setCalculationMode(checked ? 'without_igv' : 'with_igv')}
+              />
+              <Label htmlFor="calculation-mode" className={`text-sm transition-colors ${
+                calculationMode === 'without_igv' ? 'text-primary font-medium' : 'text-muted-foreground'
+              }`}>
+                Sin IGV
+              </Label>
+            </div>
+          </div>
+          <motion.p 
+            className="text-xs text-muted-foreground"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
+          >
+            {calculationMode === 'with_igv' 
+              ? 'Ingresa el monto que ya incluye IGV para calcular la base imponible'
+              : 'Ingresa el monto base (sin IGV) para calcular el total con IGV'
+            }
+          </motion.p>
+        </motion.div>
+
         <motion.div 
           className="space-y-2"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}
         >
-            <Label htmlFor="montoPrincipal">Monto Total con IGV (S/)</Label>
+            <Label htmlFor="montoPrincipal">
+              {calculationMode === 'with_igv' ? 'Monto Total con IGV (S/)' : 'Monto Base sin IGV (S/)'}
+            </Label>
             <motion.div
               whileFocus={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
