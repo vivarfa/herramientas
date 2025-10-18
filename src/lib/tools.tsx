@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import { Dashboard } from '@/tools/Dashboard';
 import { IgvCalculator } from '@/tools/IgvCalculator';
-import { ConsultaRucDni } from '@/tools/ConsultaRucDni';
 import { AsientosContables } from '@/tools/AsientosContables';
 import { DetraccionesCalculator } from '@/tools/DetraccionesCalculator';
 import { GratificacionesCalculator } from '@/tools/GratificacionesCalculator';
@@ -24,6 +23,9 @@ import { NumeroALetrasConverter } from '@/tools/NumeroALetrasConverter';
 import { AccesosRapidos } from '@/tools/AccesosRapidos';
 import { DashboardFinanciero } from '@/tools/DashboardFinanciero';
 import CalculadoraPrestamos from '@/tools/CalculadoraPrestamos';
+import { ConsultaDni } from '@/tools/ConsultaDni';
+import { ConsultaRuc } from '@/tools/ConsultaRuc';
+import { TipoDeCambio } from '@/tools/TipoDeCambio';
 
 export interface Tool {
   id: string;
@@ -35,7 +37,9 @@ export interface Tool {
 export const tools: Tool[] = [
   { id: 'dashboard', name: 'Dashboard', icon: <Home className="w-4 h-4" />, component: Dashboard },
   { id: 'igv', name: 'Calculadora IGV', icon: <Percent className="w-4 h-4" />, component: IgvCalculator },
-  { id: 'consulta', name: 'Consulta RUC/DNI', icon: <Search className="w-4 h-4" />, component: ConsultaRucDni },
+  { id: 'consulta-dni', name: 'Consulta DNI', icon: <Search className="w-4 h-4" />, component: ConsultaDni },
+  { id: 'consulta-ruc', name: 'Consulta RUC', icon: <Search className="w-4 h-4" />, component: ConsultaRuc },
+  { id: 'tipo-cambio', name: 'Tipo de Cambio', icon: <Scale className="w-4 h-4" />, component: TipoDeCambio },
   { id: 'asientos', name: 'Asientos Contables', icon: <BookCopy className="w-4 h-4" />, component: AsientosContables },
   { id: 'detracciones', name: 'Detracciones', icon: <Wallet className="w-4 h-4" />, component: DetraccionesCalculator },
   { id: 'gratificaciones', name: 'Gratificaciones', icon: <Gift className="w-4 h-4" />, component: GratificacionesCalculator },

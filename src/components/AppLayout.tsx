@@ -20,6 +20,7 @@ import { tools } from "@/lib/tools"
 import { SettingsModal } from "./SettingsModal"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
+import { GlobalCalculator } from "./GlobalCalculator"
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -118,22 +119,27 @@ export function AppLayout({ children, activeToolId, onToolSelect }: AppLayoutPro
           </div>
           
           {/* Pie de página */}
-          <footer className="border-t bg-background/95 backdrop-blur-sm px-4 py-3">
-            <div className="text-xs text-muted-foreground text-center space-y-1">
-              <p>© {new Date().getFullYear()} BILUZ - Todos los Derechos Reservados</p>
-              <p>
-                Desarrollado por{" "}
-                <a 
-                  href="https://www.billcodex.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-primary hover:text-primary/80 transition-colors duration-200 font-medium"
-                >
-                  BillCodex
-                </a>
-              </p>
-            </div>
-          </footer>
+                    <footer className="border-t bg-background/95 backdrop-blur-sm px-4 py-4 pr-20 md:pr-28">
+                      <div className="flex flex-col md:flex-row items-center md:justify-between gap-2 md:gap-4">
+                        <div className="text-xs text-muted-foreground text-center md:text-left space-y-1">
+                 <p>© {new Date().getFullYear()} BILUZ - Todos los Derechos Reservados</p>
+                 <p>
+                   Desarrollado por{" "}
+                   <a 
+                     href="https://www.billcodex.com/" 
+                     target="_blank" 
+                     rel="noopener noreferrer"
+                     className="text-primary hover:text-primary/80 transition-colors duration-200 font-medium"
+                   >
+                     BillCodex
+                   </a>
+                 </p>
+               </div>
+<div className="flex-shrink-0 w-full md:w-auto flex justify-center md:justify-end mt-2 md:mt-0">
+                 <GlobalCalculator />
+               </div>
+             </div>
+           </footer>
         </SidebarInset>
       
       {/* Mobile Bottom Navigation */}

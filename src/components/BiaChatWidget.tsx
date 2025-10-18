@@ -107,7 +107,7 @@ export function BiaChatWidget() {
           size="icon"
           className={cn(
             "fixed z-50 h-16 w-16 rounded-full shadow-xl bg-white hover:bg-gray-50 transition-all duration-300 border-2 border-blue-200 p-1",
-            isMobile ? "bottom-20 right-4" : "bottom-6 right-6"
+            isMobile ? "bottom-24 right-4" : "bottom-20 right-6"
           )}
           aria-label="Abrir chat de B-IA"
         >
