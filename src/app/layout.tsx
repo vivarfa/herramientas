@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/contexts/ThemeProvider';
 import { Toaster } from "@/components/ui/toaster"
 import MonetagSW from "@/components/MonetagSW";
+import Script from 'next/script'
 
 const ptSans = PT_Sans({
   subsets: ['latin'],
@@ -30,6 +31,13 @@ export default function RootLayout({
           ptSans.variable
         )}
       >
+        <Script 
+          id="monetag-tag"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(s){s.dataset.zone='10659236',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`,
+          }}
+        />
         <MonetagSW />
         <ThemeProvider
           attribute="class"

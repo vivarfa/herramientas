@@ -21,6 +21,7 @@ import { SettingsModal } from "./SettingsModal"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { GlobalCalculator } from "./GlobalCalculator"
+import { AdContainer } from "./AdContainer"
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -105,17 +106,28 @@ export function AppLayout({ children, activeToolId, onToolSelect }: AppLayoutPro
         </SidebarFooter>
         <SidebarRail />
       </Sidebar>
+      
       <SidebarInset>
           <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
             </div>
           </header>
-          <div className={cn(
-            "flex flex-1 flex-col gap-4 p-4 pt-0",
-            isMobile && "pb-24"
-          )}>
-            {children}
+          <div className="flex flex-1 flex-row overflow-hidden">
+            <div className={cn(
+              "flex flex-1 flex-col gap-4 p-4 pt-0",
+              isMobile && "pb-24"
+            )}>
+              {children}
+            </div>
+            
+            {!isMobile && (
+              <aside className="w-[160px] lg:w-[300px] border-l bg-card/50 backdrop-blur-sm sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto hidden md:block">
+                <div className="p-4 flex flex-col items-center">
+                  <AdContainer />
+                </div>
+              </aside>
+            )}
           </div>
           
           {/* Pie de página */}
