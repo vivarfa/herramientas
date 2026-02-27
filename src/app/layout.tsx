@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/toaster"
 import MonetagSW from "@/components/MonetagSW";
 
 const ptSans = PT_Sans({
-  subsets: ['latin'],
+  subsets:['latin'],
   weight: ['400', '700'],
   variable: '--font-pt-sans',
 });
@@ -25,11 +25,13 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        {/* 1. ANUNCIO IN-PAGE PUSH - Formato HTML Puro para que el Bot lo detecte */}
-        <script dangerouslySetInnerHTML={{ __html: `(function(s){s.dataset.zone='10659236',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))` }} />
-        
-        {/* 2. ANUNCIO MULTITAG - Lo ponemos aquí temporalmente para que el Bot lo verifique y pase la prueba */}
-        <script src="https://quge5.com/88/tag.min.js" data-zone="214756" async data-cfasync="false" />
+        {/* Script In-Page Push (Notificación flotante) - Único anuncio activo permitido */}
+        <script 
+          data-cfasync="false"
+          dangerouslySetInnerHTML={{ 
+            __html: `(function(s){s.dataset.zone='10659236',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`, 
+          }} 
+        />
       </head>
       <body
         className={cn(
