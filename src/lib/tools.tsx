@@ -4,7 +4,7 @@ import React from 'react';
 import { 
     Home, Percent, Briefcase, Calculator, Gift, Landmark, CalendarClock, AreaChart, 
     BookCopy, Search, Plane, ShieldAlert, Clock, SpellCheck, Link, Wallet, 
-    FileText, TrendingUp, Scale, DollarSign
+    FileText, TrendingUp, Scale, DollarSign, FileSpreadsheet
 } from 'lucide-react';
 import { Dashboard } from '@/tools/Dashboard';
 import { IgvCalculator } from '@/tools/IgvCalculator';
@@ -23,9 +23,7 @@ import { NumeroALetrasConverter } from '@/tools/NumeroALetrasConverter';
 import { AccesosRapidos } from '@/tools/AccesosRapidos';
 import { DashboardFinanciero } from '@/tools/DashboardFinanciero';
 import CalculadoraPrestamos from '@/tools/CalculadoraPrestamos';
-import { ConsultaDni } from '@/tools/ConsultaDni';
-import { ConsultaRuc } from '@/tools/ConsultaRuc';
-import { TipoDeCambio } from '@/tools/TipoDeCambio';
+import { SireAnalyzer } from '@/tools/SireAnalyzer';
 
 export interface Tool {
   id: string;
@@ -36,10 +34,8 @@ export interface Tool {
 
 export const tools: Tool[] = [
   { id: 'dashboard', name: 'Dashboard', icon: <Home className="w-4 h-4" />, component: Dashboard },
+  { id: 'sire', name: 'Analizador SIRE', icon: <FileSpreadsheet className="w-4 h-4" />, component: SireAnalyzer },
   { id: 'igv', name: 'Calculadora IGV', icon: <Percent className="w-4 h-4" />, component: IgvCalculator },
-  { id: 'consulta-dni', name: 'Consulta DNI', icon: <Search className="w-4 h-4" />, component: ConsultaDni },
-  { id: 'consulta-ruc', name: 'Consulta RUC', icon: <Search className="w-4 h-4" />, component: ConsultaRuc },
-  { id: 'tipo-cambio', name: 'Tipo de Cambio', icon: <Scale className="w-4 h-4" />, component: TipoDeCambio },
   { id: 'asientos', name: 'Asientos Contables', icon: <BookCopy className="w-4 h-4" />, component: AsientosContables },
   { id: 'detracciones', name: 'Detracciones', icon: <Wallet className="w-4 h-4" />, component: DetraccionesCalculator },
   { id: 'gratificaciones', name: 'Gratificaciones', icon: <Gift className="w-4 h-4" />, component: GratificacionesCalculator },

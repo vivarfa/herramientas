@@ -113,7 +113,7 @@ export function AppLayout({ children, activeToolId, onToolSelect }: AppLayoutPro
           </header>
           <div className={cn(
             "flex flex-1 flex-col gap-4 p-4 pt-0",
-            isMobile && "pb-20"
+            isMobile && "pb-24"
           )}>
             {children}
           </div>

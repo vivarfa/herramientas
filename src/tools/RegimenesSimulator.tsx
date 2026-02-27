@@ -18,7 +18,7 @@ import * as XLSX from 'xlsx';
 
 
 const UIT_VALUES: { [key: number]: number } = {
-    2026: 5500, 2025: 5350, 2024: 5150,
+    2027: 5650, 2026: 5500, 2025: 5350, 2024: 5150,
     2023: 4950, 2022: 4600, 2021: 4400
 };
 
@@ -30,6 +30,7 @@ interface Regimen {
     total: number;
     valid: boolean;
     reasons: string[];
+    isBest?: boolean;
 }
 
 export function RegimenesSimulator() {
@@ -107,10 +108,10 @@ export function RegimenesSimulator() {
 
         const utilidad = Math.max(0, ingresos - compras - gastos);
         const igvPorPagar = Math.max(0, (ingresos * 0.18) - (compras * 0.18));
-        let recommendations: Regimen[] = [];
+        const recommendations: Regimen[] = [];
 
         // Nuevo RUS
-        let nrus = { name: 'Nuevo RUS', ir: 0, igv: 0, itan: 0, total: 0, valid: true, reasons: [] };
+        const nrus: Regimen = { name: 'Nuevo RUS', ir: 0, igv: 0, itan: 0, total: 0, valid: true, reasons: [] };
         if (ingresos > 96000 || compras > 96000) { nrus.valid = false; nrus.reasons.push('Supera S/ 96,000 en ingresos o compras.'); }
         if (activos > 70000) { nrus.valid = false; nrus.reasons.push('Supera S/ 70,000 en activos.'); }
         if (necesitaFactura) { nrus.valid = false; nrus.reasons.push('Requiere emitir facturas.'); }
@@ -118,7 +119,7 @@ export function RegimenesSimulator() {
         recommendations.push(nrus);
 
         // RER
-        let rer = { name: 'Régimen Especial (RER)', ir: 0, igv: igvPorPagar, itan: 0, total: 0, valid: true, reasons: [] };
+        const rer: Regimen = { name: 'Régimen Especial (RER)', ir: 0, igv: igvPorPagar, itan: 0, total: 0, valid: true, reasons: [] };
         if (ingresos > 525000 || compras > 525000) { rer.valid = false; rer.reasons.push('Supera S/ 525,000 en ingresos o compras.'); }
         if (activos > 126000) { rer.valid = false; rer.reasons.push('Supera S/ 126,000 en activos.'); }
         if (masDe10Trabajadores) { rer.valid = false; rer.reasons.push('Supera los 10 trabajadores por turno.'); }
@@ -126,13 +127,13 @@ export function RegimenesSimulator() {
         recommendations.push(rer);
 
         // MYPE
-        let rmt = { name: 'Régimen MYPE (RMT)', ir: 0, igv: igvPorPagar, itan: 0, total: 0, valid: true, reasons: [] };
+        const rmt: Regimen = { name: 'Régimen MYPE (RMT)', ir: 0, igv: igvPorPagar, itan: 0, total: 0, valid: true, reasons: [] };
         if (ingresos > 1700 * UIT) { rmt.valid = false; rmt.reasons.push(`Supera 1,700 UIT (S/ ${(1700*UIT).toLocaleString()}) en ingresos.`); }
         if (rmt.valid) { if (utilidad <= 15 * UIT) { rmt.ir = utilidad * 0.10; } else { rmt.ir = (15 * UIT * 0.10) + ((utilidad - (15 * UIT)) * 0.295); } rmt.total = rmt.ir; }
         recommendations.push(rmt);
 
         // General
-        let rg = { name: 'Régimen General (RG)', ir: 0, igv: igvPorPagar, itan: 0, total: 0, valid: true, reasons: [] };
+        const rg: Regimen = { name: 'Régimen General (RG)', ir: 0, igv: igvPorPagar, itan: 0, total: 0, valid: true, reasons: [] };
         rg.ir = utilidad * 0.295;
         if (activos > 1000000) { rg.itan = (activos - 1000000) * 0.004; }
         rg.total = rg.ir + rg.itan;
@@ -242,10 +243,10 @@ export function RegimenesSimulator() {
                         </Select>
                     </div>
                 </div>
-                 {year === '2026' && (
+                 {year === '2027' && (
                     <Alert variant="destructive">
                         <AlertTitle>¡Atención!</AlertTitle>
-                        <AlertDescription>El valor de la UIT para 2026 (S/ {UIT_VALUES[2026]}) es una proyección.</AlertDescription>
+                        <AlertDescription>El valor de la UIT para 2027 (S/ {UIT_VALUES[2027]}) es una proyección.</AlertDescription>
                     </Alert>
                 )}
                 

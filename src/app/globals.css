@@ -136,12 +136,6 @@
   .settings-overlay {
     z-index: 50;
   }
-  
-  /* Ensure BiaChatWidget is visible */
-  .bia-chat-widget {
-    display: block !important;
-    z-index: 40;
-  }
 }
 
 @keyframes fadeIn {

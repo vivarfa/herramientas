@@ -46,6 +46,42 @@ const cronograma2025 = [
   { "periodo": "Dic", "ruc_0": "2026-01-16", "ruc_1": "2026-01-19", "ruc_2_3": "2026-01-20", "ruc_4_5": "2026-01-21", "ruc_6_7": "2026-01-22", "ruc_8_9": "2026-01-23", "buenos_contribuyentes": "2026-01-26" }
 ];
 
+const cronograma2026 = [
+  { "periodo": "Ene", "ruc_0": "2026-02-16", "ruc_1": "2026-02-17", "ruc_2_3": "2026-02-18", "ruc_4_5": "2026-02-19", "ruc_6_7": "2026-02-20", "ruc_8_9": "2026-02-23", "buenos_contribuyentes": "2026-02-24" },
+  { "periodo": "Feb", "ruc_0": "2026-03-16", "ruc_1": "2026-03-17", "ruc_2_3": "2026-03-18", "ruc_4_5": "2026-03-19", "ruc_6_7": "2026-03-20", "ruc_8_9": "2026-03-23", "buenos_contribuyentes": "2026-03-24" },
+  { "periodo": "Mar", "ruc_0": "2026-04-17", "ruc_1": "2026-04-20", "ruc_2_3": "2026-04-21", "ruc_4_5": "2026-04-22", "ruc_6_7": "2026-04-23", "ruc_8_9": "2026-04-24", "buenos_contribuyentes": "2026-04-27" },
+  { "periodo": "Abr", "ruc_0": "2026-05-18", "ruc_1": "2026-05-19", "ruc_2_3": "2026-05-20", "ruc_4_5": "2026-05-21", "ruc_6_7": "2026-05-22", "ruc_8_9": "2026-05-25", "buenos_contribuyentes": "2026-05-26" },
+  { "periodo": "May", "ruc_0": "2026-06-15", "ruc_1": "2026-06-16", "ruc_2_3": "2026-06-17", "ruc_4_5": "2026-06-18", "ruc_6_7": "2026-06-19", "ruc_8_9": "2026-06-22", "buenos_contribuyentes": "2026-06-23" },
+  { "periodo": "Jun", "ruc_0": "2026-07-15", "ruc_1": "2026-07-16", "ruc_2_3": "2026-07-17", "ruc_4_5": "2026-07-20", "ruc_6_7": "2026-07-21", "ruc_8_9": "2026-07-22", "buenos_contribuyentes": "2026-07-24" },
+  { "periodo": "Jul", "ruc_0": "2026-08-18", "ruc_1": "2026-08-19", "ruc_2_3": "2026-08-20", "ruc_4_5": "2026-08-21", "ruc_6_7": "2026-08-24", "ruc_8_9": "2026-08-25", "buenos_contribuyentes": "2026-08-26" },
+  { "periodo": "Ago", "ruc_0": "2026-09-15", "ruc_1": "2026-09-16", "ruc_2_3": "2026-09-17", "ruc_4_5": "2026-09-18", "ruc_6_7": "2026-09-21", "ruc_8_9": "2026-09-22", "buenos_contribuyentes": "2026-09-23" },
+  { "periodo": "Set", "ruc_0": "2026-10-16", "ruc_1": "2026-10-19", "ruc_2_3": "2026-10-20", "ruc_4_5": "2026-10-21", "ruc_6_7": "2026-10-22", "ruc_8_9": "2026-10-23", "buenos_contribuyentes": "2026-10-26" },
+  { "periodo": "Oct", "ruc_0": "2026-11-16", "ruc_1": "2026-11-17", "ruc_2_3": "2026-11-18", "ruc_4_5": "2026-11-19", "ruc_6_7": "2026-11-20", "ruc_8_9": "2026-11-23", "buenos_contribuyentes": "2026-11-24" },
+  { "periodo": "Nov", "ruc_0": "2026-12-17", "ruc_1": "2026-12-18", "ruc_2_3": "2026-12-21", "ruc_4_5": "2026-12-22", "ruc_6_7": "2026-12-23", "ruc_8_9": "2026-12-24", "buenos_contribuyentes": "2026-12-28" },
+  { "periodo": "Dic", "ruc_0": "2027-01-18", "ruc_1": "2027-01-19", "ruc_2_3": "2027-01-20", "ruc_4_5": "2027-01-21", "ruc_6_7": "2027-01-22", "ruc_8_9": "2027-01-25", "buenos_contribuyentes": "2027-01-26" }
+];
+
+const cronograma2027 = [
+  { "periodo": "Ene", "ruc_0": "2027-02-15", "ruc_1": "2027-02-16", "ruc_2_3": "2027-02-17", "ruc_4_5": "2027-02-18", "ruc_6_7": "2027-02-19", "ruc_8_9": "2027-02-22", "buenos_contribuyentes": "2027-02-23" },
+  { "periodo": "Feb", "ruc_0": "2027-03-15", "ruc_1": "2027-03-16", "ruc_2_3": "2027-03-17", "ruc_4_5": "2027-03-18", "ruc_6_7": "2027-03-19", "ruc_8_9": "2027-03-22", "buenos_contribuyentes": "2027-03-23" },
+  { "periodo": "Mar", "ruc_0": "2027-04-15", "ruc_1": "2027-04-16", "ruc_2_3": "2027-04-19", "ruc_4_5": "2027-04-20", "ruc_6_7": "2027-04-21", "ruc_8_9": "2027-04-22", "buenos_contribuyentes": "2027-04-23" },
+  { "periodo": "Abr", "ruc_0": "2027-05-14", "ruc_1": "2027-05-17", "ruc_2_3": "2027-05-18", "ruc_4_5": "2027-05-19", "ruc_6_7": "2027-05-20", "ruc_8_9": "2027-05-21", "buenos_contribuyentes": "2027-05-24" },
+  { "periodo": "May", "ruc_0": "2027-06-15", "ruc_1": "2027-06-16", "ruc_2_3": "2027-06-17", "ruc_4_5": "2027-06-18", "ruc_6_7": "2027-06-21", "ruc_8_9": "2027-06-22", "buenos_contribuyentes": "2027-06-23" },
+  { "periodo": "Jun", "ruc_0": "2027-07-15", "ruc_1": "2027-07-16", "ruc_2_3": "2027-07-19", "ruc_4_5": "2027-07-20", "ruc_6_7": "2027-07-21", "ruc_8_9": "2027-07-22", "buenos_contribuyentes": "2027-07-23" },
+  { "periodo": "Jul", "ruc_0": "2027-08-16", "ruc_1": "2027-08-17", "ruc_2_3": "2027-08-18", "ruc_4_5": "2027-08-19", "ruc_6_7": "2027-08-20", "ruc_8_9": "2027-08-23", "buenos_contribuyentes": "2027-08-24" },
+  { "periodo": "Ago", "ruc_0": "2027-09-15", "ruc_1": "2027-09-16", "ruc_2_3": "2027-09-17", "ruc_4_5": "2027-09-20", "ruc_6_7": "2027-09-21", "ruc_8_9": "2027-09-22", "buenos_contribuyentes": "2027-09-23" },
+  { "periodo": "Set", "ruc_0": "2027-10-15", "ruc_1": "2027-10-18", "ruc_2_3": "2027-10-19", "ruc_4_5": "2027-10-20", "ruc_6_7": "2027-10-21", "ruc_8_9": "2027-10-22", "buenos_contribuyentes": "2027-10-25" },
+  { "periodo": "Oct", "ruc_0": "2027-11-15", "ruc_1": "2027-11-16", "ruc_2_3": "2027-11-17", "ruc_4_5": "2027-11-18", "ruc_6_7": "2027-11-19", "ruc_8_9": "2027-11-22", "buenos_contribuyentes": "2027-11-23" },
+  { "periodo": "Nov", "ruc_0": "2027-12-15", "ruc_1": "2027-12-16", "ruc_2_3": "2027-12-17", "ruc_4_5": "2027-12-20", "ruc_6_7": "2027-12-21", "ruc_8_9": "2027-12-22", "buenos_contribuyentes": "2027-12-23" },
+  { "periodo": "Dic", "ruc_0": "2028-01-17", "ruc_1": "2028-01-18", "ruc_2_3": "2028-01-19", "ruc_4_5": "2028-01-20", "ruc_6_7": "2028-01-21", "ruc_8_9": "2028-01-24", "buenos_contribuyentes": "2028-01-25" }
+];
+
+const cronogramas: Record<string, typeof cronograma2025> = {
+  "2025": cronograma2025,
+  "2026": cronograma2026,
+  "2027": cronograma2027,
+};
+
 const MONTH_NAMES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 const MONTH_ABBR = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Dic"];
 
@@ -63,6 +99,7 @@ const getDeclarablePeriodAbbr = () => {
 };
 
 export function VencimientosCronograma() {
+    const [selectedYear, setSelectedYear] = useState(String(new Date().getFullYear()));
     const [selectedPeriod, setSelectedPeriod] = useState(getDeclarablePeriodAbbr);
     const [ruc, setRuc] = useState("");
     const [reminders, setReminders] = useLocalStorage<Record<string, boolean>>('sunatReminders_v3', {});
@@ -82,7 +119,8 @@ export function VencimientosCronograma() {
         return null;
     }, [ruc]);
     
-    const periodData = cronograma2025.find(row => row.periodo === selectedPeriod);
+    const currentCronograma = cronogramas[selectedYear] || cronogramas["2025"];
+    const periodData = currentCronograma.find(row => row.periodo === selectedPeriod);
     const selectedPeriodComplete = MONTH_NAMES[MONTH_ABBR.indexOf(selectedPeriod)];
 
     const { activatableReminders, activeReminders } = useMemo(() => {
@@ -207,11 +245,24 @@ export function VencimientosCronograma() {
     return (
         <Card className="flex flex-col h-full">
             <CardHeader>
-                <CardTitle>Cronograma de Vencimientos SUNAT 2025</CardTitle>
+                <CardTitle>Cronograma de Vencimientos SUNAT {selectedYear}</CardTitle>
                 <CardDescription>Consulta las fechas de vencimiento y activa recordatorios.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 flex-grow">
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                        <Label>Seleccionar Año</Label>
+                        <Select value={selectedYear} onValueChange={setSelectedYear}>
+                            <SelectTrigger>
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Object.keys(cronogramas).sort((a, b) => b.localeCompare(a)).map(year => (
+                                    <SelectItem key={year} value={year}>{year}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
                     <div className="space-y-2">
                         <Label htmlFor="month">Seleccionar Período a Declarar</Label>
                         <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>

@@ -60,12 +60,6 @@ export function SettingsModal() {
       description: "Genera y gestiona asientos contables automáticamente con validaciones integradas.",
       icon: FileText,
       category: "Contabilidad"
-    },
-    {
-      name: "Consulta RUC/DNI",
-      description: "Verifica información de contribuyentes mediante consultas a bases de datos oficiales.",
-      icon: Search,
-      category: "Consultas"
     }
   ]
 
@@ -183,7 +177,6 @@ export function SettingsModal() {
                         <li>• Calculadoras financieras avanzadas</li>
                         <li>• Dashboard con métricas en tiempo real</li>
                         <li>• Generación automática de reportes</li>
-                        <li>• Consultas a bases de datos oficiales</li>
                         <li>• Interfaz responsive y moderna</li>
                       </ul>
                     </div>

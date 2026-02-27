@@ -17,6 +17,7 @@ import * as XLSX from 'xlsx';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const UIT_VALUES: { [key: number]: number } = {
+    2027: 5650,
     2026: 5500,
     2025: 5350,
     2024: 5150,
@@ -42,19 +43,16 @@ export function RentaSimulator() {
     const [ingresos4taStr, setIngresos4taStr] = useState("");
     const [gratiOption, setGratiOption] = useState('auto');
     
-    const debouncedRemMensual = useDebounce(remuneracionMensualStr, 300);
-    const debouncedOtrosIngresos5ta = useDebounce(otrosIngresos5taStr, 300);
-    const debouncedIngresos4ta = useDebounce(ingresos4taStr, 300);
-    const debouncedManualUit = useDebounce(manualUitStr, 300);
-    
+    // Optimizamos el cálculo eliminando el debounce innecesario para operaciones matemáticas simples
+    // Los cálculos de CPU son instantáneos, no necesitan esperar 300ms
     const calculation = useMemo(() => {
         const yearInt = parseInt(year, 10);
-        const manualUit = parseFloat(debouncedManualUit) || 0;
+        const manualUit = parseFloat(manualUitStr) || 0;
         const uit = manualUit > 0 ? manualUit : (UIT_VALUES[yearInt] || 0);
         
-        const remMensual = parseFloat(debouncedRemMensual) || 0;
-        const otrosIngresosAnuales = parseFloat(debouncedOtrosIngresos5ta) || 0;
-        const ingresos4ta = parseFloat(debouncedIngresos4ta) || 0;
+        const remMensual = parseFloat(remuneracionMensualStr) || 0;
+        const otrosIngresosAnuales = parseFloat(otrosIngresos5taStr) || 0;
+        const ingresos4ta = parseFloat(ingresos4taStr) || 0;
         
         let rentaBruta5ta = 0, rentaBruta4ta = 0, deduccion20 = 0;
         
@@ -105,7 +103,7 @@ export function RentaSimulator() {
             impuestoAnual,
             retencionMensual
         };
-    }, [calcType, year, debouncedManualUit, debouncedRemMensual, debouncedOtrosIngresos5ta, debouncedIngresos4ta, gratiOption]);
+    }, [calcType, year, manualUitStr, remuneracionMensualStr, otrosIngresos5taStr, ingresos4taStr, gratiOption]);
 
     const handleExportPDF = () => {
         const doc = new jsPDF();
@@ -204,10 +202,10 @@ export function RentaSimulator() {
                 </Tabs>
                 
                 <p className="text-center text-sm text-muted-foreground">Cálculo basado en la UIT de {year}: S/ {calculation.uit.toFixed(2)}</p>
-                {year === '2026' && (
+                {year === '2027' && (
                     <Alert variant="destructive">
                         <AlertTitle>¡Atención!</AlertTitle>
-                        <AlertDescription>El valor de la UIT para 2026 (S/ 5,500) es una proyección.</AlertDescription>
+                        <AlertDescription>El valor de la UIT para 2027 (S/ 5,650) es una proyección.</AlertDescription>
                     </Alert>
                 )}
 

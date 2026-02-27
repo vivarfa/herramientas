@@ -4,7 +4,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/contexts/ThemeProvider';
 import { Toaster } from "@/components/ui/toaster"
-import { BiaChatWidget } from '@/components/BiaChatWidget';
+import MonetagSW from "@/components/MonetagSW";
 
 const ptSans = PT_Sans({
   subsets: ['latin'],
@@ -30,6 +30,7 @@ export default function RootLayout({
           ptSans.variable
         )}
       >
+        <MonetagSW />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -37,7 +38,6 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <BiaChatWidget />
           <Toaster />
         </ThemeProvider>
         <script

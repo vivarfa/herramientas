@@ -9,7 +9,11 @@ import { Label } from '@/components/ui/label';
 import { useDebounce } from '@/hooks/use-debounce';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+
 const UIT_VALUES: { [key: string]: number } = {
+    '2027': 5650,
+    '2026': 5500,
     '2025': 5350,
     '2024': 5150,
     '2023': 4950,
@@ -101,6 +105,12 @@ export function MultasSimulator() {
                 <CardDescription>Estima el monto de una multa y su posible rebaja por gradualidad.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 flex-grow">
+                {year === '2027' && (
+                    <Alert variant="destructive">
+                        <AlertTitle>¡Atención!</AlertTitle>
+                        <AlertDescription>El valor de la UIT para 2027 (S/ 5,650) es una proyección.</AlertDescription>
+                    </Alert>
+                )}
                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div className="space-y-2">
                         <Label htmlFor="uitYear">Año de la UIT:</Label>

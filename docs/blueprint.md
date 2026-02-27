@@ -7,7 +7,6 @@
 - Utility Functions: Includes utility functions for debouncing inputs, copying to clipboard, showing toast notifications, and exporting reports to PDF and Excel.
 - Accounting Tools: Features a suite of accounting tools including IGV calculator, Detracciones calculator, Gratificaciones calculator, CTS calculator, Cronograma de Vencimientos, Renta simulator, Asientos generator, Vacaciones truncas calculator, Regimenes tributarios simulator, Multas simulator, Intereses moratorios calculator, Liquidacion de beneficios sociales calculator, Número a letras conversor and Accesos rápidos.
 - Intelligent Assistant: Integrates a chatbot, B-IA, powered by a proxy API at https://biluz-ai-proxy.vercel.app/api/chat, limited to 100 daily queries, to answer accounting questions. This chatbot uses a tool which reasons if, when or how to include some element in its response, based on accounting best-practices.
-- Data Query: Allows users to query RUC/DNI data via the API https://biluz-apiocr.vercel.app/api/query-api, subject to monthly usage limits.
 - User Configuration: Offers a configuration modal with theme selection, tab reordering/visibility toggles, support links, donation option, and a factory reset (excluding API usage counters).
 
 ## Style Guidelines:

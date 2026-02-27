@@ -7,12 +7,6 @@ import { ArrowUpRight } from 'lucide-react';
 
 const links = [
     {
-        title: "Consulta de RUC",
-        description: "Verifica el estado y datos de un RUC en el padrón de SUNAT.",
-        url: "https://e-consultaruc.sunat.gob.pe/cl-ti-itmenu/MenuInternet.jsp",
-        category: "SUNAT"
-    },
-    {
         title: "Consulta de Validez de Comprobantes",
         description: "Comprueba si una factura o boleta electrónica es válida.",
         url: "https://www.sunat.gob.pe/ol-ti-itconsvalicpe/ConsValiCpe.htm",
