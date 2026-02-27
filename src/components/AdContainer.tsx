@@ -22,7 +22,7 @@ export function AdContainer() {
         adRef.current.removeChild(script)
       }
     }
-  }, [])
+  },[])
 
   return (
     <div className="w-[160px] md:w-[300px] h-full flex flex-col items-center justify-start py-4">

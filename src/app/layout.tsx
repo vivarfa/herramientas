@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/contexts/ThemeProvider';
 import { Toaster } from "@/components/ui/toaster"
 import MonetagSW from "@/components/MonetagSW";
-import Script from 'next/script'
 
 const ptSans = PT_Sans({
   subsets: ['latin'],
@@ -26,9 +25,9 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        <Script 
-          id="monetag-tag" 
-          strategy="beforeInteractive" 
+        {/* Script In-Page Push - Etiqueta HTML clásica para que el bot de Monetag la encuentre */}
+        <script 
+          data-cfasync="false"
           dangerouslySetInnerHTML={{ 
             __html: `(function(s){s.dataset.zone='10659236',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`, 
           }} 
@@ -40,13 +39,6 @@ export default function RootLayout({
           ptSans.variable
         )}
       >
-        <Script 
-          src="https://quge5.com/88/tag.min.js"
-          data-zone="214756"
-          strategy="afterInteractive"
-          data-cfasync="false"
-          async 
-        />
         <MonetagSW />
         <ThemeProvider
           attribute="class"
@@ -83,7 +75,6 @@ export default function RootLayout({
                     });
                   });
                   
-                  // Also check for elements containing specific text
                   const allDivs = document.querySelectorAll('div[style*="position: fixed"]');
                   allDivs.forEach(div => {
                     const text = div.textContent || '';
@@ -93,14 +84,9 @@ export default function RootLayout({
                   });
                 }
                 
-                // Run immediately
                 hideDevPanels();
-                
-                // Run on DOM changes
                 const observer = new MutationObserver(hideDevPanels);
                 observer.observe(document.body, { childList: true, subtree: true });
-                
-                // Run periodically as backup
                 setInterval(hideDevPanels, 1000);
               })();
             `,
