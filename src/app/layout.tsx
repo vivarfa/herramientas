@@ -25,13 +25,11 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        {/* Script In-Page Push - Etiqueta HTML clásica para que el bot de Monetag la encuentre */}
-        <script 
-          data-cfasync="false"
-          dangerouslySetInnerHTML={{ 
-            __html: `(function(s){s.dataset.zone='10659236',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`, 
-          }} 
-        />
+        {/* 1. ANUNCIO IN-PAGE PUSH - Formato HTML Puro para que el Bot lo detecte */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(s){s.dataset.zone='10659236',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))` }} />
+        
+        {/* 2. ANUNCIO MULTITAG - Lo ponemos aquí temporalmente para que el Bot lo verifique y pase la prueba */}
+        <script src="https://quge5.com/88/tag.min.js" data-zone="214756" async data-cfasync="false" />
       </head>
       <body
         className={cn(
