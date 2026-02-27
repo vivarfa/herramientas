@@ -11,6 +11,7 @@ import { Copy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { copyToClipboard } from '@/lib/utils';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 const CURRENCIES: { [key: string]: { singular: string, plural: string, symbol: string } } = {
     'PEN': { singular: 'SOL', plural: 'SOLES', symbol: 'S/' },
@@ -130,8 +131,8 @@ export const numeroALetras = (num: number, currencyKey: string) => {
 
 
 export function NumeroALetrasConverter() {
-    const [numeroStr, setNumeroStr] = useState("");
-    const [moneda, setMoneda] = useState('PEN');
+    const [numeroStr, setNumeroStr] = useLocalStorage("conversor-numero", "");
+    const [moneda, setMoneda] = useLocalStorage('conversor-moneda', 'PEN');
     const { toast } = useToast();
     const debouncedNumero = useDebounce(numeroStr, 300);
 

@@ -10,10 +10,11 @@ import { useDebounce } from '@/hooks/use-debounce';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
-import { format, differenceInDays, parse, isValid } from 'date-fns';
+import { format, differenceInDays, parse, isValid, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 // Tasa de Interés Moratorio (TIM) Mensual y Diaria
 const TIM_MENSUAL = 0.009; // 0.9%
@@ -96,9 +97,15 @@ const DateInput = ({ value, onChange }: { value?: Date; onChange: (date?: Date) 
 
 
 export function InteresesMoratoriosCalculator() {
-    const [tributoInsolutoStr, setTributoInsolutoStr] = useState("");
-    const [fechaVencimiento, setFechaVencimiento] = useState<Date | undefined>();
-    const [fechaPago, setFechaPago] = useState<Date | undefined>();
+    const [tributoInsolutoStr, setTributoInsolutoStr] = useLocalStorage("intereses-tributo", "");
+    const [fechaVencimientoStr, setFechaVencimientoStr] = useLocalStorage<string | undefined>("intereses-fecha-venc", undefined);
+    const [fechaPagoStr, setFechaPagoStr] = useLocalStorage<string | undefined>("intereses-fecha-pago", undefined);
+
+    const fechaVencimiento = useMemo(() => fechaVencimientoStr ? parseISO(fechaVencimientoStr) : undefined, [fechaVencimientoStr]);
+    const fechaPago = useMemo(() => fechaPagoStr ? parseISO(fechaPagoStr) : undefined, [fechaPagoStr]);
+
+    const setFechaVencimiento = (date?: Date) => setFechaVencimientoStr(date?.toISOString());
+    const setFechaPago = (date?: Date) => setFechaPagoStr(date?.toISOString());
 
     const debouncedTributo = useDebounce(tributoInsolutoStr, 300);
 

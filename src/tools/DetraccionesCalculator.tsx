@@ -14,6 +14,7 @@ import { ClipboardPaste } from 'lucide-react';
 import { copyToClipboard } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 const detraccionesData = [
     { value: 1.5, label: "1.5% (Bienes/Oro exonerados IGV)" },
@@ -24,10 +25,10 @@ const detraccionesData = [
 ];
 
 export function DetraccionesCalculator() {
-    const [montoStr, setMontoStr] = useState("");
-    const [selectedRate, setSelectedRate] = useState("1.5");
-    const [customRateStr, setCustomRateStr] = useState("");
-    const [redondear, setRedondear] = useState(true);
+    const [montoStr, setMontoStr] = useLocalStorage("detraccion-monto", "");
+    const [selectedRate, setSelectedRate] = useLocalStorage("detraccion-rate", "1.5");
+    const [customRateStr, setCustomRateStr] = useLocalStorage("detraccion-custom-rate", "");
+    const [redondear, setRedondear] = useLocalStorage("detraccion-round", true);
     const { toast } = useToast();
 
     const debouncedMonto = useDebounce(montoStr, 300);

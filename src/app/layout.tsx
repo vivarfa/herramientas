@@ -25,6 +25,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        <Script 
+          id="monetag-tag" 
+          strategy="beforeInteractive" 
+          dangerouslySetInnerHTML={{ 
+            __html: `(function(s){s.dataset.zone='10659236',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`, 
+          }} 
+        />
+      </head>
       <body
         className={cn(
           'min-h-screen bg-background font-sans antialiased',
@@ -32,11 +41,11 @@ export default function RootLayout({
         )}
       >
         <Script 
-          id="monetag-tag"
+          src="https://quge5.com/88/tag.min.js"
+          data-zone="214756"
           strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(s){s.dataset.zone='10659236',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`,
-          }}
+          data-cfasync="false"
+          async 
         />
         <MonetagSW />
         <ThemeProvider

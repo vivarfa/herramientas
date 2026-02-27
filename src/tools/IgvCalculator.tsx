@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast'
 import { copyToClipboard } from '@/lib/utils'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Switch } from '@/components/ui/switch'
+import { useLocalStorage } from '@/hooks/use-local-storage'
 
 type ActiveField = 'total' | 'igv';
 type CalculationMode = 'with_igv' | 'without_igv';
@@ -19,13 +20,13 @@ type CalculationMode = 'with_igv' | 'without_igv';
 export function IgvCalculator() {
   const { toast } = useToast();
   
-  const [totalStr, setTotalStr] = useState("");
-  const [igvRateStr, setIgvRateStr] = useState("18");
-  const [igvAmountStr, setIgvAmountStr] = useState("");
-  const [unitsStr, setUnitsStr] = useState("");
-  const [decimals, setDecimals] = useState("4");
-  const [activeField, setActiveField] = useState<ActiveField>('total');
-  const [calculationMode, setCalculationMode] = useState<CalculationMode>('with_igv');
+  const [totalStr, setTotalStr] = useLocalStorage("igv-total", "");
+  const [igvRateStr, setIgvRateStr] = useLocalStorage("igv-rate", "18");
+  const [igvAmountStr, setIgvAmountStr] = useLocalStorage("igv-amount", "");
+  const [unitsStr, setUnitsStr] = useLocalStorage("igv-units", "");
+  const [decimals, setDecimals] = useLocalStorage("igv-decimals", "4");
+  const [activeField, setActiveField] = useLocalStorage<ActiveField>("igv-active-field", 'total');
+  const [calculationMode, setCalculationMode] = useLocalStorage<CalculationMode>("igv-calc-mode", 'with_igv');
 
   const performCalculation = useCallback(() => {
     const total = parseFloat(totalStr) || 0;

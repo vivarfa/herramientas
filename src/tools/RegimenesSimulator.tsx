@@ -15,6 +15,7 @@ import { FileDown, CheckCircle, XCircle } from 'lucide-react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 
 const UIT_VALUES: { [key: number]: number } = {
@@ -34,15 +35,15 @@ interface Regimen {
 }
 
 export function RegimenesSimulator() {
-    const [year, setYear] = useState(String(new Date().getFullYear()));
-    const [ingresosMensuales, setIngresosMensuales] = useState('');
-    const [comprasMensuales, setComprasMensuales] = useState('');
-    const [ingresosAnuales, setIngresosAnuales] = useState('');
-    const [comprasAnuales, setComprasAnuales] = useState('');
-    const [gastosDeducibles, setGastosDeducibles] = useState('');
-    const [valorActivos, setValorActivos] = useState('');
-    const [necesitaFactura, setNecesitaFactura] = useState(true);
-    const [masDe10Trabajadores, setMasDe10Trabajadores] = useState(false);
+    const [year, setYear] = useLocalStorage('regimen-year', String(new Date().getFullYear()));
+    const [ingresosMensuales, setIngresosMensuales] = useLocalStorage('regimen-ing-mensual', '');
+    const [comprasMensuales, setComprasMensuales] = useLocalStorage('regimen-comp-mensual', '');
+    const [ingresosAnuales, setIngresosAnuales] = useLocalStorage('regimen-ing-anual', '');
+    const [comprasAnuales, setComprasAnuales] = useLocalStorage('regimen-comp-anual', '');
+    const [gastosDeducibles, setGastosDeducibles] = useLocalStorage('regimen-gastos', '');
+    const [valorActivos, setValorActivos] = useLocalStorage('regimen-activos', '');
+    const [necesitaFactura, setNecesitaFactura] = useLocalStorage('regimen-factura', true);
+    const [masDe10Trabajadores, setMasDe10Trabajadores] = useLocalStorage('regimen-trabajadores', false);
     const [isUpdating, setIsUpdating] = useState(false);
 
     const debouncedIngresosAnuales = useDebounce(ingresosAnuales, 300);

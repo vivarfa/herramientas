@@ -10,6 +10,7 @@ import { useDebounce } from '@/hooks/use-debounce';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 const UIT_VALUES: { [key: string]: number } = {
     '2027': 5650,
@@ -57,12 +58,12 @@ const infraccionesConfig: { [key: string]: any } = {
 };
 
 export function MultasSimulator() {
-    const [year, setYear] = useState(new Date().getFullYear().toString());
-    const [regimen, setRegimen] = useState("General");
-    const [infraccionKey, setInfraccionKey] = useState("176_1");
-    const [subsanacionType, setSubsanacionType] = useState("Voluntaria");
-    const [tributoOmitidoStr, setTributoOmitidoStr] = useState("");
-    const [ingresosNetosStr, setIngresosNetosStr] = useState("");
+    const [year, setYear] = useLocalStorage("multa-year", new Date().getFullYear().toString());
+    const [regimen, setRegimen] = useLocalStorage("multa-regimen", "General");
+    const [infraccionKey, setInfraccionKey] = useLocalStorage("multa-infraccion", "176_1");
+    const [subsanacionType, setSubsanacionType] = useLocalStorage("multa-subsanacion", "Voluntaria");
+    const [tributoOmitidoStr, setTributoOmitidoStr] = useLocalStorage("multa-tributo", "");
+    const [ingresosNetosStr, setIngresosNetosStr] = useLocalStorage("multa-ingresos", "");
 
     const debouncedTributo = useDebounce(tributoOmitidoStr, 300);
     const debouncedIngresos = useDebounce(ingresosNetosStr, 300);

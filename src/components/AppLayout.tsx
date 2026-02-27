@@ -122,7 +122,7 @@ export function AppLayout({ children, activeToolId, onToolSelect }: AppLayoutPro
             </div>
             
             {!isMobile && (
-              <aside className="w-[160px] lg:w-[300px] border-l bg-card/50 backdrop-blur-sm sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto hidden md:block">
+              <aside className="w-[160px] lg:w-[300px] sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto hidden md:block">
                 <div className="p-4 flex flex-col items-center">
                   <AdContainer />
                 </div>

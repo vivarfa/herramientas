@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,13 +12,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarIcon, FileDown } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
-import { format, parse, isValid, differenceInDays } from 'date-fns';
+import { format, parse, isValid, differenceInDays, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 const ASIGNACION_FAMILIAR_MONTO = 113.00;
 const DIAS_POR_ANIO_BASE = 360;
@@ -101,13 +102,21 @@ const DateInput = ({ value, onChange, disabled }: { value?: Date; onChange: (dat
 
 
 export function VacacionesCalculator() {
-    const [sueldoStr, setSueldoStr] = useState("");
-    const [asignacionFamiliar, setAsignacionFamiliar] = useState(false);
-    const [fechaInicio, setFechaInicio] = useState<Date | undefined>();
-    const [fechaCese, setFechaCese] = useState<Date | undefined>();
-    const [haGozadoVacaciones, setHaGozadoVacaciones] = useState(false);
-    const [fechaFinVacacionesGozadas, setFechaFinVacacionesGozadas] = useState<Date | undefined>();
-    const [regimen, setRegimen] = useState('general');
+    const [sueldoStr, setSueldoStr] = useLocalStorage("vacaciones-sueldo", "");
+    const [asignacionFamiliar, setAsignacionFamiliar] = useLocalStorage("vacaciones-asig-fam", false);
+    const [fechaInicioStr, setFechaInicioStr] = useLocalStorage<string | undefined>("vacaciones-fecha-inicio", undefined);
+    const [fechaCeseStr, setFechaCeseStr] = useLocalStorage<string | undefined>("vacaciones-fecha-cese", undefined);
+    const [haGozadoVacaciones, setHaGozadoVacaciones] = useLocalStorage("vacaciones-gozado", false);
+    const [fechaFinVacacionesGozadasStr, setFechaFinVacacionesGozadasStr] = useLocalStorage<string | undefined>("vacaciones-fecha-gozado", undefined);
+    const [regimen, setRegimen] = useLocalStorage("vacaciones-regimen", 'general');
+
+    const fechaInicio = useMemo(() => fechaInicioStr ? parseISO(fechaInicioStr) : undefined, [fechaInicioStr]);
+    const fechaCese = useMemo(() => fechaCeseStr ? parseISO(fechaCeseStr) : undefined, [fechaCeseStr]);
+    const fechaFinVacacionesGozadas = useMemo(() => fechaFinVacacionesGozadasStr ? parseISO(fechaFinVacacionesGozadasStr) : undefined, [fechaFinVacacionesGozadasStr]);
+
+    const setFechaInicio = (date?: Date) => setFechaInicioStr(date?.toISOString());
+    const setFechaCese = (date?: Date) => setFechaCeseStr(date?.toISOString());
+    const setFechaFinVacacionesGozadas = (date?: Date) => setFechaFinVacacionesGozadasStr(date?.toISOString());
     
     const debouncedSueldo = useDebounce(sueldoStr, 300);
 

@@ -12,11 +12,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
-import { format, parse, isValid, differenceInDays, getYear, getMonth, getDate, addYears, startOfMonth, lastDayOfMonth } from 'date-fns';
+import { format, parse, isValid, differenceInDays, getYear, getMonth, getDate, addYears, startOfMonth, lastDayOfMonth, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 const ASIGNACION_FAMILIAR_MONTO = 113.00;
 const ESSALUD_BONUS_PERCENTAGE = 0.09;
@@ -198,13 +199,19 @@ const calculateVacations = (fechaInicio: Date, fechaCese: Date, remComputable: n
 };
 
 export function LiquidacionBeneficiosCalculator() {
-    const [sueldoStr, setSueldoStr] = useState("");
-    const [asignacionFamiliar, setAsignacionFamiliar] = useState(false);
-    const [promedioVariablesStr, setPromedioVariablesStr] = useState("");
-    const [fechaInicio, setFechaInicio] = useState<Date | undefined>();
-    const [fechaCese, setFechaCese] = useState<Date | undefined>();
-    const [regimen, setRegimen] = useState('general');
-    const [seguro, setSeguro] = useState('essalud');
+    const [sueldoStr, setSueldoStr] = useLocalStorage("liquidacion-sueldo", "");
+    const [asignacionFamiliar, setAsignacionFamiliar] = useLocalStorage("liquidacion-asig-fam", false);
+    const [promedioVariablesStr, setPromedioVariablesStr] = useLocalStorage("liquidacion-variables", "");
+    const [fechaInicioStr, setFechaInicioStr] = useLocalStorage<string | undefined>("liquidacion-fecha-inicio", undefined);
+    const [fechaCeseStr, setFechaCeseStr] = useLocalStorage<string | undefined>("liquidacion-fecha-cese", undefined);
+    const [regimen, setRegimen] = useLocalStorage("liquidacion-regimen", 'general');
+    const [seguro, setSeguro] = useLocalStorage("liquidacion-seguro", 'essalud');
+
+    const fechaInicio = useMemo(() => fechaInicioStr ? parseISO(fechaInicioStr) : undefined, [fechaInicioStr]);
+    const fechaCese = useMemo(() => fechaCeseStr ? parseISO(fechaCeseStr) : undefined, [fechaCeseStr]);
+
+    const setFechaInicio = (date?: Date) => setFechaInicioStr(date?.toISOString());
+    const setFechaCese = (date?: Date) => setFechaCeseStr(date?.toISOString());
 
     const debouncedSueldo = useDebounce(sueldoStr, 300);
     const debouncedPromedioVariables = useDebounce(promedioVariablesStr, 300);

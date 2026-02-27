@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,7 +11,7 @@ import { useDebounce } from '@/hooks/use-debounce';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarIcon, FileDown } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
-import { format, parse, isValid, differenceInDays } from 'date-fns';
+import { format, parse, isValid, differenceInDays, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -19,6 +19,7 @@ import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 const ASIGNACION_FAMILIAR_MONTO = 113.00;
 const MESES_PERIODO_CTS = 6;
@@ -135,13 +136,19 @@ const calcularTiempoComputableCTS = (fechaInicio: Date, fechaFin: Date, periodo:
 
 
 export function CtsCalculator() {
-    const [sueldoStr, setSueldoStr] = useState("");
-    const [asignacionFamiliar, setAsignacionFamiliar] = useState(false);
-    const [promedioHorasExtrasStr, setPromedioHorasExtrasStr] = useState("");
-    const [montoGratificacionAnteriorStr, setMontoGratificacionAnteriorStr] = useState("");
-    const [fechaInicio, setFechaInicio] = useState<Date | undefined>();
-    const [fechaFin, setFechaFin] = useState<Date | undefined>();
-    const [regimen, setRegimen] = useState('general');
+    const [sueldoStr, setSueldoStr] = useLocalStorage("cts-sueldo", "");
+    const [asignacionFamiliar, setAsignacionFamiliar] = useLocalStorage("cts-asig-fam", false);
+    const [promedioHorasExtrasStr, setPromedioHorasExtrasStr] = useLocalStorage("cts-horas-extras", "");
+    const [montoGratificacionAnteriorStr, setMontoGratificacionAnteriorStr] = useLocalStorage("cts-grati-anterior", "");
+    const [fechaInicioStr, setFechaInicioStr] = useLocalStorage<string | undefined>("cts-fecha-inicio", undefined);
+    const [fechaFinStr, setFechaFinStr] = useLocalStorage<string | undefined>("cts-fecha-fin", undefined);
+    const [regimen, setRegimen] = useLocalStorage("cts-regimen", 'general');
+
+    const fechaInicio = useMemo(() => fechaInicioStr ? parseISO(fechaInicioStr) : undefined, [fechaInicioStr]);
+    const fechaFin = useMemo(() => fechaFinStr ? parseISO(fechaFinStr) : undefined, [fechaFinStr]);
+
+    const setFechaInicio = (date?: Date) => setFechaInicioStr(date?.toISOString());
+    const setFechaFin = (date?: Date) => setFechaFinStr(date?.toISOString());
 
     const debouncedSueldo = useDebounce(sueldoStr, 300);
     const debouncedPromedioHorasExtras = useDebounce(promedioHorasExtrasStr, 300);

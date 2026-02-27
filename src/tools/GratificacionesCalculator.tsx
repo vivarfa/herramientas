@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,7 +12,7 @@ import { useDebounce } from '@/hooks/use-debounce';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarIcon, FileDown } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
-import { format, parse, isValid, getYear, getMonth } from 'date-fns';
+import { format, parse, isValid, getYear, getMonth, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -20,6 +20,7 @@ import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 const ASIGNACION_FAMILIAR_MONTO = 113.00;
 const PORCENTAJE_BONIFICACION_ESSALUD = 0.09;
@@ -161,14 +162,20 @@ const DateInput = ({ value, onChange }: { value?: Date; onChange: (date?: Date) 
 
 
 export function GratificacionesCalculator() {
-    const [sueldoStr, setSueldoStr] = useState("");
-    const [asignacionFamiliar, setAsignacionFamiliar] = useState(false);
-    const [aportacionSalud, setAportacionSalud] = useState<'essalud' | 'eps'>('essalud');
-    const [fechaInicio, setFechaInicio] = useState<Date | undefined>();
-    const [fechaFin, setFechaFin] = useState<Date | undefined>();
-    const [regimen, setRegimen] = useState('general');
-    const [modalidadAgrario, setModalidadAgrario] = useState('incluida');
+    const [sueldoStr, setSueldoStr] = useLocalStorage("gratificacion-sueldo", "");
+    const [asignacionFamiliar, setAsignacionFamiliar] = useLocalStorage("gratificacion-asig-fam", false);
+    const [aportacionSalud, setAportacionSalud] = useLocalStorage<'essalud' | 'eps'>("gratificacion-salud", 'essalud');
+    const [fechaInicioStr, setFechaInicioStr] = useLocalStorage<string | undefined>("gratificacion-fecha-inicio", undefined);
+    const [fechaFinStr, setFechaFinStr] = useLocalStorage<string | undefined>("gratificacion-fecha-fin", undefined);
+    const [regimen, setRegimen] = useLocalStorage("gratificacion-regimen", 'general');
+    const [modalidadAgrario, setModalidadAgrario] = useLocalStorage("gratificacion-agrario", 'incluida');
     
+    const fechaInicio = useMemo(() => fechaInicioStr ? parseISO(fechaInicioStr) : undefined, [fechaInicioStr]);
+    const fechaFin = useMemo(() => fechaFinStr ? parseISO(fechaFinStr) : undefined, [fechaFinStr]);
+
+    const setFechaInicio = (date?: Date) => setFechaInicioStr(date?.toISOString());
+    const setFechaFin = (date?: Date) => setFechaFinStr(date?.toISOString());
+
     const debouncedSueldo = useDebounce(sueldoStr, 300);
 
     const areInputsValid = useMemo(() => {

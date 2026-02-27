@@ -15,6 +15,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 const UIT_VALUES: { [key: number]: number } = {
     2027: 5650,
@@ -33,15 +34,14 @@ const tramosRenta = [
     { limitePorcentaje: Infinity, tasa: 0.30, nombre: "Más de 45 UIT" }
 ];
 
-
 export function RentaSimulator() {
-    const [calcType, setCalcType] = useState('5ta');
-    const [year, setYear] = useState(String(new Date().getFullYear()));
-    const [manualUitStr, setManualUitStr] = useState("");
-    const [remuneracionMensualStr, setRemuneracionMensualStr] = useState("");
-    const [otrosIngresos5taStr, setOtrosIngresos5taStr] = useState("");
-    const [ingresos4taStr, setIngresos4taStr] = useState("");
-    const [gratiOption, setGratiOption] = useState('auto');
+    const [calcType, setCalcType] = useLocalStorage('renta-calc-type', '5ta');
+    const [year, setYear] = useLocalStorage('renta-year', String(new Date().getFullYear()));
+    const [manualUitStr, setManualUitStr] = useLocalStorage("renta-manual-uit", "");
+    const [remuneracionMensualStr, setRemuneracionMensualStr] = useLocalStorage("renta-rem-mensual", "");
+    const [otrosIngresos5taStr, setOtrosIngresos5taStr] = useLocalStorage("renta-otros-ingresos", "");
+    const [ingresos4taStr, setIngresos4taStr] = useLocalStorage("renta-ingresos-4ta", "");
+    const [gratiOption, setGratiOption] = useLocalStorage('renta-grati-option', 'auto');
     
     // Optimizamos el cálculo eliminando el debounce innecesario para operaciones matemáticas simples
     // Los cálculos de CPU son instantáneos, no necesitan esperar 300ms

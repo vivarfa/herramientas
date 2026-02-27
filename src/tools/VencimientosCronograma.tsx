@@ -99,9 +99,9 @@ const getDeclarablePeriodAbbr = () => {
 };
 
 export function VencimientosCronograma() {
-    const [selectedYear, setSelectedYear] = useState(String(new Date().getFullYear()));
-    const [selectedPeriod, setSelectedPeriod] = useState(getDeclarablePeriodAbbr);
-    const [ruc, setRuc] = useState("");
+    const [selectedYear, setSelectedYear] = useLocalStorage("vencimientos-year", String(new Date().getFullYear()));
+    const [selectedPeriod, setSelectedPeriod] = useLocalStorage("vencimientos-period", getDeclarablePeriodAbbr());
+    const [ruc, setRuc] = useLocalStorage("vencimientos-ruc", "");
     const [reminders, setReminders] = useLocalStorage<Record<string, boolean>>('sunatReminders_v3', {});
     const { toast } = useToast();
 

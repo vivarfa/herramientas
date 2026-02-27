@@ -153,9 +153,9 @@ const TemplateManager = ({ templates, setTemplates, toast, onDialogClose }: {
 export function AsientosContables() {
     const [customTemplates, setCustomTemplates] = useLocalStorage<Template[]>('contabilidad-templates-custom', []);
     const [allTemplates, setAllTemplates] = useState(() => [...defaultTemplates, ...customTemplates]);
-    const [selectedTemplateValue, setSelectedTemplateValue] = useState(defaultTemplates[0].value);
-    const [montoStr, setMontoStr] = useState("");
-    const [tipoMonto, setTipoMonto] = useState<'Con IGV' | 'Sin IGV'>('Con IGV');
+    const [selectedTemplateValue, setSelectedTemplateValue] = useLocalStorage('contabilidad-selected-template', defaultTemplates[0].value);
+    const [montoStr, setMontoStr] = useLocalStorage("contabilidad-monto", "");
+    const [tipoMonto, setTipoMonto] = useLocalStorage<'Con IGV' | 'Sin IGV'>('contabilidad-tipo-monto', 'Con IGV');
     const [calculatedEntries, setCalculatedEntries] = useState<CalculatedEntry[]>([]);
     
     const debouncedMonto = useDebounce(montoStr, 300);

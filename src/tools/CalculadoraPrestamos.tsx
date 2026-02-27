@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calculator, TrendingUp, PieChart, Download } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 interface LoanCalculation {
   monthlyPayment: number;
@@ -33,12 +34,12 @@ interface ComparisonData {
 }
 
 export default function CalculadoraPrestamos() {
-  const [loanAmount, setLoanAmount] = useState<string>('');
-  const [interestRate, setInterestRate] = useState<string>('');
-  const [loanTerm, setLoanTerm] = useState<string>('');
-  const [loanType, setLoanType] = useState<string>('fixed');
-  const [paymentFrequency, setPaymentFrequency] = useState<string>('monthly');
-  const [extraPayment, setExtraPayment] = useState<string>('');
+  const [loanAmount, setLoanAmount] = useLocalStorage<string>('loan-amount', '');
+  const [interestRate, setInterestRate] = useLocalStorage<string>('loan-rate', '');
+  const [loanTerm, setLoanTerm] = useLocalStorage<string>('loan-term', '');
+  const [loanType, setLoanType] = useLocalStorage<string>('loan-type', 'fixed');
+  const [paymentFrequency, setPaymentFrequency] = useLocalStorage<string>('loan-frequency', 'monthly');
+  const [extraPayment, setExtraPayment] = useLocalStorage<string>('loan-extra', '');
   
   const [calculation, setCalculation] = useState<LoanCalculation | null>(null);
   const [comparisons, setComparisons] = useState<ComparisonData[]>([]);
